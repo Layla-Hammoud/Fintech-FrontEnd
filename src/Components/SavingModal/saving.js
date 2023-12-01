@@ -1,63 +1,91 @@
-import { useState, useEffect } from "react";
+import { Box, Typography, TextField,Button } from "@mui/material";
+import React from "react";
+  const Savinglayout=()=>{
+    return(
+        <Box sx={{
+            display:"flex",
+            flexDirection:"column",
+            alignItems:"center",
+            justifyContent:"center",
+            height:"100vh"
 
-const addSavingModal = ({isOpen, OnClose, fetchSavingData}) => {
+        }}>
+            <Typography>Add Saving</Typography>
+        <Box mb={2}>
+            <TextField
+                required
+                id="outlined-required"
+                label="Title"
+                placeholder="Enter the title"
+            />
+        </Box >
+        <Box mb={2}>
+            <TextField
+                required
+                id="outlined-required"
+                label="Goal Amount"
+                placeholder="Enter Goal Amount"
+            />
+        </Box>
+        <Box mb={2}>
+            <TextField
+                required
+                id="outlined-required"
+                label="Amount"
+                placeholder="Enter Amount"
+            />
+        </Box>
+        <Button variant="contained" color="success">Save</Button>
+        </Box>
+    )
+  }
+  export default Savinglayout;
 
-    const [title, setTitle] = useState('');
-    const [goalAmount, setGoalAmount] = useState('');
-    const [amount, setAmount] = useState('');
+// import { useState, useEffect } from "react"; 
+// import Button from '@mui/material/Button';
+// const addSavingModal = ({isOpen, onClose, onSave}) => {
 
-    const handleSave = async () => {
+// //     const [title, setTitle] = useState('');
+// //     const [goalAmount, setGoalAmount] = useState('');
+// //     const [amount, setAmount] = useState('');
 
-        try{
-            const response = await fetch('/api/savings/${walletId}',{
-                method: "POST",
-                headers:{
-                    'content-Type': 'application/json',
-                },
-                body: JSON.stringify({title,goalAmount,amount}),
+// //     const handleSave = async () => {
 
-            });
+// //         onSave ({title, goalAmount,amount});
 
-            if(!response.ok){
+// //         setTitle('');
+// //         setGoalAmount('');
+// //         setAmount('');
+        
+// //         onClose();
+// //     };
 
-                onclose();
-                fetchSavingData();
-            } else {
-                console.error('Fialed to add saving');
-            }
-        } catch(error) {
-            console.error('Error adding saving', error);
-        }
-    };
+// //     useEffect(() => {
+// //         setTitle('');
+// //         setGoalAmount('');
+// //         setAmount('');
+// //     }, [isOpen] );
 
-    useEffect(() => {
-        setTitle('');
-        setGoalAmount('');
-        setAmount('');
-    }, [isOpen] );
+// //     return (
+// //         // <Modal isOpen={isOpen} onClose={onClose}>
+// //         //     <h2>Add saving</h2>
+// //         //     <label>
+// //         //         Title: 
+// //         //         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+// //         //     </label>
 
-    return (
-        <Modal isOpen={isOpen} OnClose={OnClose}>
-            <h2>Add saving</h2>
-            <label>
-                Title: 
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
-            </label>
+// //         //     <label>
+// //         //         Goal Amount: 
+// //         //         <input type="number" value={goalAmount} onChange={(e) => setGoalAmount(e.target.value)}/>
+// //         //     </label>
 
-            <label>
-                Goal Amount: 
-                <input type="number" value={goalAmount} onChange={(e) => setGoalAmount(e.target.value)}/>
-            </label>
+// //         //     <label>
+// //         //         Amount: 
+// //         //         <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)}/>
+// //         //     </label>
+// //         // </Modal>
+// //     );
 
-            <label>
-                Amount: 
-                <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)}/>
-            </label>
+// };
 
-            <button onClick={handleSave}>Save</button>
-        </Modal>
-    );
-
-};
-
-export default addSavingModal;
+// export default addSavingModal;
