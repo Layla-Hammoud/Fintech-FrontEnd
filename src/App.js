@@ -1,10 +1,9 @@
-import NavBar from "./Layouts/NavBar";
-
+import AppRoutes from "./Routes/Routes";
 
 function App() {
   return (
     <div className="App">
-      <NavBar/>
+      <AppRoutes />
     </div>
   );
 }
