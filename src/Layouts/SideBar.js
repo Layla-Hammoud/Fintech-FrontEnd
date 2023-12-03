@@ -112,8 +112,8 @@ export default function SideBar(){
   return (
     <Box>
       <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{ backgroundColor: 'white' }}>
-        <Toolbar sx={{display:'flex'}}>
+      <AppBar position="fixed" open={open} sx={{ backgroundColor: 'white'}}>
+        <Toolbar sx={{display:'flex',width:'100%',justifyContent:'space-between'}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -140,7 +140,7 @@ export default function SideBar(){
             }}>
             M<Typography component='s' color='green' fontWeight='900' fontSize='20px'>Y</Typography>wallet
           </Typography>
-          <Box component='nav' sx={{display:'flex',position:"absolute" ,right:20}}>
+          <Box component='nav' sx={{display:'flex'}}>
           <Notifications />
           <Avatar
               onClick={accountPopover.handleOpen}
