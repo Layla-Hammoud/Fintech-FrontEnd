@@ -1,5 +1,5 @@
 import React from 'react'
-import PromotionLayout from '../Layouts/promotions/promotionCardLayout.js';
+import PromotionLayout from '../Components/Promotions/PromotionCards';
 
 function PromotionPage() {
   return (

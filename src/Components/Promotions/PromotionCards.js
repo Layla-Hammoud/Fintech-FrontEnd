@@ -1,11 +1,11 @@
 import React from "react";
-import Promotioncard from "../../Components/promotionCardComponent.js";
+import OneCardPromotion from './OneCardPromotion.js'
 import Container from "@mui/material/Container";
 import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import {createTheme , ThemeProvider} from "@mui/material";
 
-const PromotionLayout = () => {
+const PromotionCards = () => {
   const fakeData = [
     {
         name: 'Basic Plan',
@@ -79,7 +79,7 @@ const PromotionLayout = () => {
       { 
         fakeData.map((data, key) => (
           <Grid item xs={12} sm={6} md={4} key={key}>
-          <Promotioncard  name={data.name} amount={data.amount} detail={data.detail} startDate={data.startDate} />
+          <OneCardPromotion  name={data.name} amount={data.amount} detail={data.detail} startDate={data.startDate} />
           </Grid>
         ))
         }
@@ -91,4 +91,4 @@ const PromotionLayout = () => {
 </ThemeProvider>
  );
 };
-export default PromotionLayout;
+export default PromotionCards;
