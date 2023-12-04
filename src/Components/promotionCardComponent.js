@@ -90,11 +90,11 @@ const Promotioncard = ()=>{
     <Paper
      elevation={4}
    
-    sx={{width: '100%', maxWidth: '360px', height: '320px' ,marginLeft:'3m', marginTop:'3m', display:'flex' , flexDirection:'column' ,alignItems:'center' ,borderRadius:'20px', '& img':{marginTop: '1.5rem'},'@media (min-width: 280px)': {
+    sx={{width: '100%', maxWidth: '360px', height: '320px' , display:'flex' , flexDirection:'column' ,alignItems:'center' ,borderRadius:'20px', '& img':{marginTop: '1.5rem'},'@media (min-width: 280px)': {
         margin: '2em'}}}>
         <img 
         src={maker} alt='maker'/>
-        <Box sx={{marginLeft:'3.5rem' , mt:'1.3rem'}}>
+        <Box sx={{ marginRight:'6rem' ,mt:'1.3rem'}}>
         <Box>
             <Typography variant='p'>{data.title}</Typography>
             <Typography variant='subtitle1' sx={{marginTop:'0.8rem' ,  width: '100%'}}><Typography component='span'sx={{ fontSize: '15px' }}>{data.amount}%</Typography> {data.deatil}</Typography>
