@@ -1,5 +1,5 @@
 import React from "react";
-import Promotioncard from "../../Components/promotionComponent.js";
+import Promotioncard from "../../Components/promotionCardComponent.js";
 import Container from "@mui/material/Container";
 import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -70,8 +70,10 @@ const PromotionLayout = () => {
   return (
     <ThemeProvider theme={theme}>
     <Container sx={{ backgroundColor: "white" , marginY:5,'@media(min-width:280px)':{display:'flex', flexDirection:'column'}}}>
+        <Box sx={{marginLeft:'2rem'}}>
       <Typography variant="subtitle1">Promotions</Typography>
       <Typography variant="p">Here is a list of all promotions</Typography>
+      </Box>
      <Box sx={{ flexGrow: 1 , marginTop:'3rem'}}>
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
       { 
