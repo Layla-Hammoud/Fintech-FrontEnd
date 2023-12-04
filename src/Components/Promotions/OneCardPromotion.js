@@ -1,10 +1,10 @@
 import { Paper } from '@mui/material'
 import React from 'react'
-import maker from '../Assets/Images/maker.png'
+import maker from '../../Assets/Images/maker.png'
 import { Box }from '@mui/material'
 import { Typography } from '@mui/material'
-import clock from '../Assets/Icons/Clock.png'
-import Hourglass from '../Assets/Icons/Hourglass.png'
+import clock from '../../Assets/Icons/Clock.png'
+import Hourglass from '../../Assets/Icons/Hourglass.png'
 import { createTheme , ThemeProvider} from '@mui/material'
 
 
