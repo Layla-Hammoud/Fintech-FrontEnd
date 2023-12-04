@@ -1,5 +1,5 @@
-import { Box, Typography, Unstable_Grid2 as Grid } from "@mui/material";
-
+import { Box, Unstable_Grid2 as Grid } from "@mui/material";
+import Image from '../Assets/Images/crypto1.jpg'
 export const Layout = (props) => {
   const { children } = props;
   return (
@@ -46,29 +46,13 @@ export const Layout = (props) => {
             lg={6}
             sx={{
               display: { xs: 'none', lg: 'flex' },
-              alignItems: "center",
               background: "#119c59",
-              color: "white",
-              justifyContent: "center",
               height: "100%",
+              backgroundImage: `url('${Image}')`, 
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }}
           >
-            <Box sx={{ p: 3 }}>
-              <Typography
-                align="center"
-                sx={{
-                  fontSize: "2em",
-                  lineHeight: "1.6em",
-                  mb: 1,
-                }}
-                variant="h1"
-              >
-                Empower your finances with the convenience of a digital wallet.
-                Sign up today to unlock a world of seamless transactions and
-                financial freedom.
-              </Typography>
-              <img alt="" src="" />
-            </Box>
           </Grid>
         </Grid>
       </Box>
