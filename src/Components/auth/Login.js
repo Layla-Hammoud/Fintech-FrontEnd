@@ -1,7 +1,26 @@
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import "./auth.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 const Login = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    })}
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      setFormData({
+        email: '',
+        password: '',
+      });
+    };
+  
   return (
     <>
         <Box
@@ -27,12 +46,14 @@ const Login = () => {
                   Don't have an account? <Link to="/sign-up">Sign up</Link>
                 </Typography>
               </Stack>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <Stack spacing={3}>
                   <TextField
                     fullWidth
                     label="Email Address"
                     name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     required
                     sx={{
                       "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
@@ -48,6 +69,8 @@ const Login = () => {
                     fullWidth
                     label="Password"
                     name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
                     type="password"
                     required
                     sx={{
