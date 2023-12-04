@@ -8,30 +8,30 @@ import {createTheme , ThemeProvider} from "@mui/material";
 const PromotionLayout = () => {
   const fakeData = [
     {
-        title: 'Basic Plan',
+        name: 'Basic Plan',
         amount: 29.99,
-        deatil:'hello how are you tody',
+        detail:'hello how are you tody',
         startDate : '20/3/2027',
            
 
     },
      {
-            title: 'sultan Plan',
+            name: 'sultan Plan',
             amount: 29.99,
-            deatil:'hello how are you tody',
+            detail:'hello how are you tody',
             startDate : '20/3/2025',
             
         },
         {
-            title: 'maria Plan',
+            name: 'maria Plan',
             amount: 29.99,
-            deatil:'hello how are you tody',
+            detail:'hello how are you tody',
             startDate : '20/3/2022',
             
         },{
-            title: 'FtimaPlan',
+            name: 'FtimaPlan',
             amount: 29.99,
-            deatil:'hello how are you tody',
+            detail:'hello how are you tody',
             startDate : '20/3/2022',
              
         }]
@@ -79,7 +79,7 @@ const PromotionLayout = () => {
       { 
         fakeData.map((data, key) => (
           <Grid item xs={12} sm={6} md={4} key={key}>
-          <Promotioncard  name={data.name} amount={data.amount} detail={data.deatil} startDate={data.startDate} />
+          <Promotioncard  name={data.name} amount={data.amount} detail={data.detail} startDate={data.startDate} />
           </Grid>
         ))
         }
