@@ -22,10 +22,12 @@ import Sell from '@mui/icons-material/Sell';
 import Settings from '@mui/icons-material/Settings';
 import SwapVert from '@mui/icons-material/SwapVert';
 import PublishedWithChanges from '@mui/icons-material/PublishedWithChanges'
-import Notifications from '../Components/Notifications';
 import {Avatar} from '@mui/material'
-import { AccountPopover} from '../Components/AccountPopover';
-import { usePopover } from '../Components/usePopover';
+import Notifications from '../Components/TopSide/Notifications';
+import { AccountPopover} from '../Components/TopSide/AccountPopover';
+import { usePopover } from '../Components/TopSide/usePopover';
+import { Outlet } from 'react-router-dom';
+
 
 const drawerWidth = 240;
 const icons =[<Person />,<SwapVert/>,<MoveDown/>,<PublishedWithChanges/>,<Sell/>,<Settings/>];
@@ -110,6 +112,7 @@ export default function SideBar(){
   };
 
   return (
+    <>
     <Box>
       <CssBaseline />
       <AppBar position="fixed" open={open} sx={{ backgroundColor: 'white'}}>
@@ -205,5 +208,7 @@ export default function SideBar(){
         onClose={accountPopover.handleClose}
       />
     </Box>
+    <Outlet/>
+    </>
   );
 }

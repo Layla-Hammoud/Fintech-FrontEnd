@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Typography } from '@mui/material'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, MenuItem, InputLabel, Select } from '@mui/material';
-import './table.css'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, MenuItem, Select } from '@mui/material';
+import './TransactionTable.css'
 function TransactionTable() {
     //data  istead of id should  userName (population)
     const rows = [

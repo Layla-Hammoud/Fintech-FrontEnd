@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import Box from '@mui/material/Box';
 // import List from '@mui/material/List';
 import Badge from '@mui/material/Badge';
@@ -6,7 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
 import NotificationsNone from '@mui/icons-material/NotificationsNone'
 import NotificationItem from './NotificationItem';
 

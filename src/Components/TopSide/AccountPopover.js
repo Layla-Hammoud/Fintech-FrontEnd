@@ -1,21 +1,21 @@
-import { useCallback } from 'react';
+// import { useCallback } from 'react';
 // import { useRouter } from 'next/navigation';
 import { Box, Divider, MenuItem, MenuList, Popover, Typography } from '@mui/material';
-// import { useAuth } from 'src/hooks/use-auth';
+
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open } = props;
 //   const router = useRouter();
 //   const auth = useAuth();
 
-  const handleSignOut = useCallback(
-    () => {
-      onClose?.();
-      // auth.signOut();
-    //   router.push('/auth/login');
-    },
-    // [onClose, auth, router]
-  );
+  // const handleSignOut = useCallback(
+  //   () => {
+  //     onClose?.();
+  //     auth.signOut();
+  //     router.push('/auth/login');
+  //   },
+  //   [onClose, auth, router]
+  // );
 
   return (
     <Popover
@@ -55,7 +55,7 @@ export const AccountPopover = (props) => {
           }
         }}
       >
-        <MenuItem onClick={handleSignOut}>
+        <MenuItem>
           Sign out
         </MenuItem>
       </MenuList>
