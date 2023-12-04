@@ -1,11 +1,9 @@
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
-import { Layout } from "../../Layouts/auth";
 import "./auth.css";
 import { Link } from "react-router-dom";
-const SignIn = () => {
+const Login = () => {
   return (
     <>
-      <Layout>
         <Box
           sx={{
             flex: "1 1 auto",
@@ -82,9 +80,8 @@ const SignIn = () => {
             </div>
           </Box>
         </Box>
-      </Layout>
     </>
   );
 };
 
-export default SignIn;
+export default Login;

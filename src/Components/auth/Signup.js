@@ -11,7 +11,6 @@ import {
   FormControl,
 } from "@mui/material";
 import "./auth.css";
-import { Layout } from "../../Layouts/auth";
 import { Link } from "react-router-dom";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -27,7 +26,6 @@ const MenuProps = {
 const Signup = () => {
   return (
     <>
-      <Layout>
         <Box
           sx={{
             flex: "1 1 auto",
@@ -145,7 +143,6 @@ const Signup = () => {
             </div>
           </Box>
         </Box>
-      </Layout>
     </>
   );
 };
