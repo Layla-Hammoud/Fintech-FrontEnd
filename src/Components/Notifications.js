@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 // import List from '@mui/material/List';
 import Badge from '@mui/material/Badge';
@@ -8,15 +7,8 @@ import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-// import ListItemButton from '@mui/material/ListItemButton';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemText from '@mui/material/ListItemText';
-// import ListSubheader from '@mui/material/ListSubheader';
-// import Avatar from '@mui/material/Avatar';
-// import { fToNow } from '../utils/format-time';
 import NotificationsNone from '@mui/icons-material/NotificationsNone'
 import NotificationItem from './NotificationItem';
-import io from 'socket.io-client'; // Import the socket.io-client library
 
 // Mockup data for notifications
 const NOTIFICATIONS = [
@@ -27,8 +19,6 @@ const NOTIFICATIONS = [
   { title: 'transaction canceled', message: 'the tansaction is not accepted by merchent X .' }
 ];
 
-// Socket setup
-const socket = io('http://localhost:3001'); // Replace with your actual server URL
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState(NOTIFICATIONS);
@@ -36,18 +26,6 @@ const Notifications = () => {
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  // useEffect(() => {
-  //   // Listen for incoming notifications
-  //   socket.on('notification', (notification) => {
-  //     // Update notifications when a new one is received
-  //     setNotifications((prevNotifications) => [notification, ...prevNotifications]);
-  //   });
-
-  //   // Clean up socket connection when component unmounts
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
 
   const handleButtonClick = (event) => {
     if (popoverOpen) {
