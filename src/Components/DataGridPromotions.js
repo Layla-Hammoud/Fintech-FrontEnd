@@ -20,10 +20,6 @@ import {
   randomArrayItem,
 } from '@mui/x-data-grid-generator';
 
-const roles = ['Market', 'Finance', 'Development'];
-const randomRole = () => {
-  return randomArrayItem(roles);
-};
 
 const initialRows = [
     {id:1,name:'promotion1',description:'Benefit now from a promotion over 20%',amount:20,startDate:'10-12-2023',endDate:'10-1-2024'},
@@ -51,7 +47,7 @@ function EditToolbar(props) {
   return (
     <GridToolbarContainer>
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add record
+        Add promotion
       </Button>
     </GridToolbarContainer>
   );
