@@ -1,6 +1,6 @@
 import { Box, Typography, TextField, Button} from "@mui/material";
 import React from "react";
-
+import { IoClose } from "react-icons/io5";
 const EditSaving =() =>{
 
     return (
@@ -12,7 +12,7 @@ const EditSaving =() =>{
             height:"100vh",
             padding:"10"
         }}>
-        <Typography textAlign="left" mb={2}>Edit Saving</Typography>
+        <Typography textAlign="left" mb={2}>Edit Saving <IoClose /></Typography>
         <Box mb={2}>
             <TextField
                 required
