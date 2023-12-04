@@ -40,9 +40,8 @@ const theme = createTheme({
     },
    
 })
-// },
    
-const Promotioncard = ({ name, amount, detail, startDate })=>{
+const OneCardPromotion = ({ name, amount, detail, startDate })=>{
     
      const currentDate = new Date();
      const startDateParts = startDate.split('/');
@@ -100,4 +99,4 @@ const Promotioncard = ({ name, amount, detail, startDate })=>{
 }
 
 
-export default Promotioncard;
+export default OneCardPromotion;
