@@ -42,41 +42,11 @@ const theme = createTheme({
 })
 // },
    
-const Promotioncard = ()=>{
-    const fakeData = [
-        {
-            title: 'Basic Plan',
-            amount: 29.99,
-            deatil:'hello how are you tody',
-            startDate : '20/3/2027',
-               
+const Promotioncard = ({ name, amount, detail, startDate })=>{
     
-        },
-         {
-                title: 'sultan Plan',
-                amount: 29.99,
-                deatil:'hello how are you tody',
-                startDate : '20/3/2025',
-                
-            },
-            {
-                title: 'maria Plan',
-                amount: 29.99,
-                deatil:'hello how are you tody',
-                startDate : '20/3/2022',
-                
-            },{
-                title: 'FtimaPlan',
-                amount: 29.99,
-                deatil:'hello how are you tody',
-                startDate : '20/3/2022',
-                 
-            }
-    ]
-     const data =fakeData[0]
      const currentDate = new Date();
-     const startDateParts = data.startDate.split('/');
-           const startDate = new Date(
+     const startDateParts = startDate.split('/');
+           const date = new Date(
              parseInt(startDateParts[2], 10),
              parseInt(startDateParts[1], 10) - 1,
              parseInt(startDateParts[0], 10));
@@ -96,8 +66,8 @@ const Promotioncard = ()=>{
         src={maker} alt='maker'/>
         <Box sx={{ marginRight:'6rem' ,mt:'1.3rem'}}>
         <Box>
-            <Typography variant='p'>{data.title}</Typography>
-            <Typography variant='subtitle1' sx={{marginTop:'0.8rem' ,  width: '100%'}}><Typography component='span'sx={{ fontSize: '15px' }}>{data.amount}%</Typography> {data.deatil}</Typography>
+            <Typography variant='p'>{name}</Typography>
+            <Typography variant='subtitle1' sx={{marginTop:'0.8rem' ,  width: '100%'}}><Typography component='span'sx={{ fontSize: '15px' }}>{amount}%</Typography> {detail}</Typography>
         </Box>
         <Box 
         sx={{display:'flex',alignItems:'center',}}>
@@ -105,7 +75,7 @@ const Promotioncard = ()=>{
                 src={clock}
                 alt='clock'
                 />
-                <Typography variant='subtitle1' sx={{marginTop:'1.5rem' , ml:'0.8rem'}}>{data.startDate}</Typography>
+                <Typography variant='subtitle1' sx={{marginTop:'1.5rem' , ml:'0.8rem'}}>{startDate}</Typography>
                 </Box>
                 <Box 
                 sx={{display:'flex', alignItems:'center'}}>
@@ -114,7 +84,7 @@ const Promotioncard = ()=>{
                 alt='Hourglass'
                 />
                 <Typography variant='subtitle1' sx={{marginTop:'1.5rem' , ml:'0.8rem'}}>
-                {currentDate.getTime() < startDate.getTime()
+                {currentDate.getTime() < date.getTime()
                     ? 'Upcoming'
                     : 'Active'}
                 </Typography>
