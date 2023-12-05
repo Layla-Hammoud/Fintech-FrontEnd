@@ -11,7 +11,6 @@ const AppRoutes = () => {
   <Route path='/' element={<SideBar/>} >
    <Route path='history' element={<TransactionTable/>} />
    <Route path='/promotions' element={<PromotionPage/>}></Route>
-   <Route path='/card' element={<Merchants/>}></Route>
    </Route>
   </Routes>
   </BrowserRouter>
