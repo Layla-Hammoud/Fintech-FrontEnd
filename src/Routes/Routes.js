@@ -3,7 +3,7 @@ import React from 'react'
 import SideBar from '../Layouts/SideBar'
 import TransactionTable from '../Components/TransactionTable/TransactionTable'
 import PromotionPage from '../Pages/promotionPage'
-
+import Merchants from '../Pages/AllMerchants/Merchants'
 const AppRoutes = () => {
   return (
   <BrowserRouter>
@@ -11,6 +11,7 @@ const AppRoutes = () => {
   <Route path='/' element={<SideBar/>} >
    <Route path='history' element={<TransactionTable/>} />
    <Route path='/promotions' element={<PromotionPage/>}></Route>
+   <Route path='/card' element={<Merchants/>}></Route>
    </Route>
   </Routes>
   </BrowserRouter>
