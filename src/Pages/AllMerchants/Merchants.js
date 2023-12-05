@@ -31,8 +31,9 @@ const Merchants = () => {
   sx={{
     marginTop:"6em",
     marginLeft:"5em",
-    '@media (max-width:600px)': {
+    '@media (max-width:720px)': {
         flexDirection: "column",
+        justifyContent:"center",
         gap:"30px",
       },
   }}
