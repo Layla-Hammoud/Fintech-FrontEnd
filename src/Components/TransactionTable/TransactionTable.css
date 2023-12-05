@@ -1,0 +1,40 @@
+.MuiTableRow-root>* {
+    padding:10px ;
+
+}
+
+.MuiTableRow-root.MuiTableRow-head>* {
+    font-weight: bold !important;
+}
+
+
+.Table td,
+th {
+    border: none !important;
+}
+
+.MuiTableRow-root:hover {
+    box-shadow: 0 5px 10px 5px rgb(223, 221, 221);
+}
+
+.Table:first-child {
+    border-radius: 0.7rem !important;
+
+}
+
+
+.status {
+    font-weight: 600;
+}
+
+
+
+@media (max-width: 600px) {
+
+    .Box {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+ 
+  }
