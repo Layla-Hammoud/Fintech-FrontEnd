@@ -4,7 +4,9 @@ import React from 'react'
 import SideBar from '../Layouts/SideBar'
 import TransactionTable from '../Components/TransactionTable/TransactionTable'
 import PromotionPage from '../Pages/promotionPage'
-import SavingPage from '../Pages/Login.js'
+// import PromotionCards from '../Components/Promotions/PromotionCards'
+import SectionUserDashboard from '../Components/Promotions/section'
+// import SavingPage from '../Pages/Login.js'
 const AppRoutes = () => {
   return (
   <BrowserRouter>
@@ -13,6 +15,8 @@ const AppRoutes = () => {
    <Route path='history' element={<TransactionTable/>} />
    <Route path='/promotions' element={<PromotionPage/>}></Route>
    </Route>
+   <Route path='do' element={<SectionUserDashboard/>} />
+
   </Routes>
   </BrowserRouter>
   )
