@@ -117,6 +117,7 @@ export default function SideBar(){
       <CssBaseline />
       <AppBar position="fixed" open={open} sx={{ backgroundColor: 'white'}}>
         <Toolbar sx={{display:'flex',width:'100%',justifyContent:'space-between'}}>
+        <Box sx={{display:'flex'}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -133,25 +134,29 @@ export default function SideBar(){
             color:'white',
             background:'#4CD080',
               mr: 2,
-              display: { md: 'flex' },
+              display: { xl: 'flex' },
               fontFamily: 'fantasy',
               fontWeight: 700,
               letterSpacing: '.1rem',
               textDecoration: 'none',
               borderRadius:1,
-              p:1
+              p:1,
+              display:{sm:'none'},
+              ...(open && { display: 'none' })
             }}>
             M<Typography component='s' color='green' fontWeight='900' fontSize='20px'>Y</Typography>wallet
           </Typography>
+          </Box>
           <Box component='nav' sx={{display:'flex'}}>
-          <Notifications />
+          <Notifications sx={{display:{sm:'none'}}}/>
           <Avatar
               onClick={accountPopover.handleOpen}
               ref={accountPopover.anchorRef}
               sx={{
                 cursor: 'pointer',
                 height: 40,
-                width: 40
+                width: 40,
+                marginLeft:2
               }}
               src=""
             />
@@ -163,6 +168,20 @@ export default function SideBar(){
 
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
+        <Typography variant="h6" noWrap component="div"  sx={{
+            color:'white',
+            background:'#4CD080',
+              mr: 2,
+              display: { md: 'flex' },
+              fontFamily: 'fantasy',
+              fontWeight: 700,
+              letterSpacing: '.1rem',
+              textDecoration: 'none',
+              borderRadius:1,
+              p:1
+            }}>
+            M<Typography component='s' color='green' fontWeight='900' fontSize='20px'>Y</Typography>wallet
+          </Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
