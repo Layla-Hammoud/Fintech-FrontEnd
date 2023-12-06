@@ -1,8 +1,23 @@
 import React from "react";
-import { Grid, Typography, LinearProgress, Icon } from "@mui/material";
-import { green } from "@mui/material/colors";
+import { Grid, Typography, LinearProgress, Icon, IconButton } from "@mui/material";
+// import { green } from "@mui/material/colors";
+// import EditIcon from '@mui/icons-material/Edit';
+import BasicModal from "../SavingModal/EditModal.js"
 
 const ProgressSaving = ({goalAmount, title, amount}) =>{
+    // const handleEditClick = () => {
+        
+    //     BasicModal.handleOpen();
+    //   };
+    const [openModal, setOpenModal] = React.useState(false);
+
+    const handleOpenModal = () => {
+       setOpenModal(true);
+    };
+   
+    const handleCloseModal = () => {
+       setOpenModal(false);
+    };
     return(
         <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} sm={6}>
@@ -27,10 +42,14 @@ const ProgressSaving = ({goalAmount, title, amount}) =>{
                     />
             </Grid>
             <Grid item xs={12} sm={6} sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography >
-                    {amount} <Icon sx={{ color: green[500], display: "inline-block" }}>+</Icon>
-                </Typography>
+                    <Typography>
+                    {amount} 
+            <IconButton edge="end" color="primary" >
+                <Icon onClick={handleOpenModal} sx={{ color: "green"}} >+</Icon>
+            </IconButton>
+            </Typography>
             </Grid>
+            <BasicModal open={openModal} onClose={handleCloseModal} title={title} />
         </Grid>
     );
 };

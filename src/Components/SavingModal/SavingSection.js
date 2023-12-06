@@ -27,6 +27,7 @@ const SavingSection = () => {
                 }}>ADD +</Button>
 
             </Box>
+            
 
             <ProgressSaving title="Goal 1" goalAmount={500} amount={309} />
             <ProgressSaving title="Goal 2" goalAmount={900} amount={500} />
