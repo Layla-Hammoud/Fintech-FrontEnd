@@ -12,7 +12,11 @@ import {
   GridToolbarContainer,
   GridActionsCellItem,
   GridRowEditStopReasons,
+  GridToolbarFilterButton,
+
 } from '@mui/x-data-grid';
+import {  MenuItem,Select} from '@mui/material'
+
 import {
   randomCreatedDate,
   randomTraderName,
@@ -34,6 +38,7 @@ const initialRows = [
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
+  const [sorting, setSorting] = React.useState('');
 
   const handleClick = () => {
     const id = randomId();
@@ -42,20 +47,42 @@ function EditToolbar(props) {
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
     }));
+
+
+
   };
 
   return (
-    <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+    <GridToolbarContainer sx={{display:'flex',justifyContent:'flex-end',width:'100%',alignItems:'center',
+    '@media(width<900px)':{
+      display:'flex',justifyContent:'center'
+    },
+    '@media(width<300px)':{
+      display:'flex',justifyContent:'flex-start'
+    },
+    }}>
+      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick} sx={{height:'40px'}}>
         Add promotion
       </Button>
+      <Select labelId='sortingPromotion' value={sorting} style={{ marginLeft: '8px' ,width:'80px',height:'40px'}}
+        onChange={(event) => setSorting(event.target.value)}
+      >
+        <MenuItem value="" disabled>
+          sorted by
+        </MenuItem>
+        <MenuItem value="All">All</MenuItem>
+        <MenuItem value="Recent">Recent</MenuItem>
+      </Select>
+      <GridToolbarFilterButton sx={{height:'40px'}}/>
     </GridToolbarContainer>
   );
 }
 
-export default function DataGridPromotions() {
+export default function GridPromotion() {
   const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState({});
+ 
+
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -179,16 +206,31 @@ export default function DataGridPromotions() {
   return (
     <Box
       sx={{
-        height: 500,
-        width: '100%',
+        display:'block',
+        height: 650,
+        width: '80% ',
         '& .actions': {
           color: 'text.secondary',
         },
         '& .textPrimary': {
           color: 'text.primary',
         },
+       marginLeft:'130px',
+       marginTop:'120px',
+      '& .MuiDataGrid-cell':{
+        border:'none',
+        backgroundColor:'#FAFAFA',
+        marginTop:1,
+    },
+    '& .MuiDataGrid-columnHeader':{
+      backgroundColor:'#119C59',
+      color:'white',
+      fontWeight:'Bold'
+    }
       }}
+
     >
+  
       <DataGrid
       className='grid'
         rows={rows}
@@ -204,6 +246,8 @@ export default function DataGridPromotions() {
         slotProps={{
           toolbar: { setRows, setRowModesModel },
         }}
+
+        sx={{border:'none',}}
       />
     </Box>
   );

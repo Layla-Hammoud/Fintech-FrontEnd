@@ -7,12 +7,15 @@ import PromotionPage from '../Pages/promotionPage'
 // import PromotionCards from '../Components/Promotions/PromotionCards'
 import SectionUserDashboard from '../Components/Promotions/section'
 // import SavingPage from '../Pages/Login.js'
+import GridPromotion from '../Components/GridPromotion/GridPromotion'
+
+
 const AppRoutes = () => {
   return (
   <BrowserRouter>
   <Routes>
       <Route path='/' element={<SideBar/>} >
-   <Route path='history' element={<TransactionTable/>} />
+   <Route path='history' element={<GridPromotion/>} />
    <Route path='/promotions' element={<PromotionPage/>}></Route>
    </Route>
    <Route path='do' element={<SectionUserDashboard/>} />
