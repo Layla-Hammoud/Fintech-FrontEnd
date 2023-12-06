@@ -7,7 +7,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { PieChart } from '@mui/x-charts/PieChart';
+import { PieChart } from "@mui/x-charts/PieChart";
 import { useState } from "react";
 const StatisticCard = () => {
   const [time, setTime] = useState("");
@@ -15,7 +15,7 @@ const StatisticCard = () => {
   const handleChange = (event) => {
     setTime(event.target.value);
   };
-  const customColors = ['#ff9c33', '#0F5533', '#4CD080'];
+  const customColors = ["#ff9c33", "#0F5533", "#4CD080"];
   return (
     <>
       <Paper
@@ -32,13 +32,12 @@ const StatisticCard = () => {
           margin: "20px",
           "& img": { marginTop: "1.5rem" },
           "@media (max-width: 700px)": {
-              width:"80%",
-              margin:"auto"
+            width: "80%",
+            margin: "auto",
           },
           "@media (min-width: 280px)": {
             padding: "1.5em 2em",
           },
-          
         }}
       >
         <Box
@@ -93,41 +92,65 @@ const StatisticCard = () => {
           }}
         >
           <Box>
-            <p>Income</p>
-            <p>$473</p>
+            <p style={{color:"#AFAFAF"}}>Income</p>
+            <p>
+              <strong>$473</strong>
+            </p>
           </Box>
           <Box>
-            <p>Expenses</p> <p>$473</p>
+            <p style={{color:"#AFAFAF"}}>Expenses</p>{" "}
+            <p>
+              <strong>$473</strong>
+            </p>
           </Box>
           <Box>
-            <p>Saving</p> <p>$473</p>
+            <p style={{color:"#AFAFAF"}}>Saving</p>{" "}
+            <p>
+              <strong>$473</strong>
+            </p>
           </Box>
         </Box>
         <Box>
-        <PieChart
-      series={[
-        {
-          data: [
-            { id: 0, value: 437, label: 'income',color: customColors[0] },
-            { id: 1, value: 103, label: 'expenses',color: customColors[1] },
-            { id: 2, value: 900, label: 'saving',color: customColors[2] },
-          ],
-        },
-      ]}
-      width={400}
-      height={200}
-      sx={{
-        "@media (max-width: 700px)": {
-          ".css-66gjpw-MuiResponsiveChart-container":{
-            width:"200px",
-            height:"150px"
-          },
-          ".MuiChartsLegend-root.MuiChartsLegend-column.css-1u0lry5-MuiChartsLegend-root": {
-            display: "none"
-          }
-        },
-      }}
-    />
+          <PieChart
+            series={[
+              {
+                data: [
+                  {
+                    id: 0,
+                    value: 437,
+                    label: "income",
+                    color: customColors[0],
+                  },
+                  {
+                    id: 1,
+                    value: 103,
+                    label: "expenses",
+                    color: customColors[1],
+                  },
+                  {
+                    id: 2,
+                    value: 900,
+                    label: "saving",
+                    color: customColors[2],
+                  },
+                ],
+              },
+            ]}
+            width={400}
+            height={200}
+            sx={{
+              "@media (max-width: 700px)": {
+                ".css-66gjpw-MuiResponsiveChart-container": {
+                  width: "200px",
+                  height: "150px",
+                },
+                ".MuiChartsLegend-root.MuiChartsLegend-column.css-1u0lry5-MuiChartsLegend-root":
+                  {
+                    display: "none",
+                  },
+              },
+            }}
+          />
         </Box>
       </Paper>
     </>
