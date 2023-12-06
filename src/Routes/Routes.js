@@ -5,6 +5,7 @@ import React from 'react'
 import SideBar from '../Layouts/SideBar'
 import TransactionTable from '../Components/TransactionTable/TransactionTable'
 import PromotionPage from '../Pages/promotionPage'
+import PaginationComponent from '../Components/pagination'
 // import PromotionCards from '../Components/Promotions/PromotionCards'
 // import SavingPage from '../Pages/Login.js'
 
@@ -18,6 +19,8 @@ const AppRoutes = () => {
    <Route path='history' element={<TransactionTable/>} />
    <Route path='/promotions' element={<PromotionPage/>}></Route>
    </Route>
+   <Route path='/pagi' element={<PaginationComponent/>}></Route>
+
 
   </Routes>
   </BrowserRouter>
