@@ -2,13 +2,12 @@ import React from "react";
 import { Grid, Typography, LinearProgress, Icon, IconButton } from "@mui/material";
 // import { green } from "@mui/material/colors";
 // import EditIcon from '@mui/icons-material/Edit';
-import BasicModal from "../SavingModal/EditModal.js"
+// import BasicModal from "./BasicModal.js"
+// import EditSaving from "./EditSaving.js";
+import BasicModal from "./BasicModal";
 
 const ProgressSaving = ({goalAmount, title, amount}) =>{
-    // const handleEditClick = () => {
-        
-    //     BasicModal.handleOpen();
-    //   };
+   
     const [openModal, setOpenModal] = React.useState(false);
 
     const handleOpenModal = () => {
@@ -18,7 +17,7 @@ const ProgressSaving = ({goalAmount, title, amount}) =>{
     const handleCloseModal = () => {
        setOpenModal(false);
     };
-    return(
+    return( <>
         <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} sm={6}>
                 <Typography variant="h5" sx={{
@@ -45,12 +44,14 @@ const ProgressSaving = ({goalAmount, title, amount}) =>{
                     <Typography>
                     {amount} 
             <IconButton edge="end" color="primary" >
-                <Icon onClick={handleOpenModal} sx={{ color: "green"}} >+</Icon>
+                <Icon sx={{ color: "green"}} onClick={()=>{handleOpenModal()}} >+</Icon>
+                {/* <Icon onClick={handleOpenModal} sx={{ color: "green"}} >+</Icon> */}
             </IconButton>
             </Typography>
             </Grid>
-            <BasicModal open={openModal} onClose={handleCloseModal} title={title} />
         </Grid>
+            <BasicModal isEdit={true} open={openModal} close={handleCloseModal} data={{goalAmount, title, amount}}/>
+            </>
     );
 };
 

@@ -1,8 +1,9 @@
 import React from "react";
 import { Container, Typography, Button, Box } from '@mui/material';
 import ProgressSaving from "./ProgressSaving.js";
-
+// import BasicModal from "./BasicModal.js";
 const SavingSection = () => {
+
     return (
         <Container sx={{
             maxWidth: 'md', padding: '20px', margin:'auto',
@@ -29,10 +30,10 @@ const SavingSection = () => {
             </Box>
             
 
-            <ProgressSaving title="Goal 1" goalAmount={500} amount={309} />
-            <ProgressSaving title="Goal 2" goalAmount={900} amount={500} />
-            <ProgressSaving title="Goal 3" goalAmount={450} amount={150} />
-            
+            <ProgressSaving title="TV" goalAmount={500} amount={309} />
+            <ProgressSaving title="Game" goalAmount={900} amount={500} />
+            <ProgressSaving title="Trip" goalAmount={450} amount={150} />
+           
         </Container>
     )
 }
