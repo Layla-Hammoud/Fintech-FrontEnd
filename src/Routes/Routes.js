@@ -22,6 +22,7 @@ const AppRoutes = () => {
    <Route path='/pagi' element={<PaginationComponent/>}></Route>
 
 
+   {/* </Route> */}
   </Routes>
   </BrowserRouter>
   )
