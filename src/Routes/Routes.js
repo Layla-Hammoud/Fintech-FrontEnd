@@ -1,7 +1,7 @@
 import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import React from 'react'
 
-import SideBar from '../Layouts/SideBar'
+import SideBar from '../Layouts/SideBar/SideBar'
 import TransactionTable from '../Components/TransactionTable/TransactionTable'
 import PromotionPage from '../Pages/promotionPage'
 // import PromotionCards from '../Components/Promotions/PromotionCards'
