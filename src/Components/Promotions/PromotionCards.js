@@ -69,6 +69,7 @@ const PromotionCards = () => {
           "@media(min-width:280px)": {
             display: "flex",
             flexDirection: "column",
+            marginLeft:'2rem'
           },
         }}
       >

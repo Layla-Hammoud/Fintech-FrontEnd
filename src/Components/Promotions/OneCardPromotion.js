@@ -47,6 +47,7 @@ const OneCardPromotion = ({ name, amount, detail, startDate }) => {
         <Paper
           elevation={4}
           sx={{
+            
             width: "100%",
             maxWidth: "360px",
             height: "320px",
@@ -56,7 +57,7 @@ const OneCardPromotion = ({ name, amount, detail, startDate }) => {
             borderRadius: "20px",
             "& img": { marginTop: "1.5rem" },
             "@media (min-width: 280px)": {
-              margin: "2em",
+              margin: "4em",
               maxWidth: "100%",
             },
           }}
