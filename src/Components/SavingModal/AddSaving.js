@@ -1,6 +1,6 @@
 import { Box, Typography, TextField,Button } from "@mui/material";
 import React from "react";
-  const Savinglayout=()=>{
+  const Savinglayout=(props)=>{
     return(
         <Box sx={{
             display:"flex",

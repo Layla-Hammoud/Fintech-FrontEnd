@@ -1,10 +1,21 @@
 import React from "react";
 import { Container, Typography, Button, Box } from '@mui/material';
 import ProgressSaving from "./ProgressSaving.js";
-// import BasicModal from "./BasicModal.js";
-const SavingSection = () => {
+import SecondModal from "./SecondModal.js";
+const SavingSection = ({goalAmount, title, amount}) => {
+
+    const [openModal, setOpenModal] = React.useState(false);
+
+    const handleOpenModal = () => {
+       setOpenModal(true);
+    };
+   
+    const handleCloseModal = () => {
+       setOpenModal(false);
+    };
 
     return (
+        <>
         <Container sx={{
             maxWidth: 'md', padding: '20px', margin:'auto',
         }}>
@@ -25,7 +36,7 @@ const SavingSection = () => {
                 }}>My Savings</Typography>
                 <Button variant="contained" color="success" sx={{
                     marginLeft: '100px',
-                }}>ADD +</Button>
+                }} onClick={()=>{handleOpenModal()}}>ADD +</Button>
 
             </Box>
             
@@ -35,6 +46,8 @@ const SavingSection = () => {
             <ProgressSaving title="Trip" goalAmount={450} amount={150} />
            
         </Container>
+        <SecondModal isEdit={true} open={openModal} close={handleCloseModal} data={{goalAmount, title, amount}}/>
+        </>
     )
 }
 
