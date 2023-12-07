@@ -1,6 +1,6 @@
 import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import React from 'react'
-
+import MerchantDashboard from '../Pages/MerchantDashboard/MerchantDashboard.js'
 import SideBar from '../Layouts/SideBar/SideBar'
 import TransactionTable from '../Components/TransactionTable/TransactionTable'
 import PromotionPage from '../Pages/promotionPage'
@@ -15,7 +15,7 @@ const AppRoutes = () => {
   <BrowserRouter>
   <Routes>
     <Route path='/' element={<SideBar/>} >
-   <Route path='users' element={<GridUser/>} />
+   <Route path='users' element={<MerchantDashboard/>} />
    <Route path='history' element={<TransactionTable/>} />
    <Route path='transaction' element={<GridPromotion/>}/>
    <Route path='/promotions' element={<PromotionPage/>}></Route>
