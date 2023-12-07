@@ -6,11 +6,13 @@ import TransactionTable from '../Components/TransactionTable/TransactionTable'
 import PromotionPage from '../Pages/promotionPage'
 import SavingSection from '../Components/SavingModal/SavingSection.js'
 import SavingPage from '../Pages/Login.js'
+import GridUser from '../Components/GridUser/GridUser'
 const AppRoutes = () => {
   return (
   <BrowserRouter>
   <Routes>
     <Route path='/' element={<SideBar/>} >
+   <Route path='users' element={<GridUser/>} />
    <Route path='history' element={<TransactionTable/>} />
    <Route path='/promotions' element={<PromotionPage/>}></Route>
    <Route path='/EditModal' element={<SavingPage/>}></Route>
