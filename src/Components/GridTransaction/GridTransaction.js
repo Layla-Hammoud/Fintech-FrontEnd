@@ -8,7 +8,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import '../GridPromotion/GridPromotion.css'
 import {Link} from 'react-router-dom'
-
+import merchantImg from '../../Assets/Images/maker-mkr-logo.png'
 
 import {
     GridRowModes,

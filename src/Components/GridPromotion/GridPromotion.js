@@ -49,7 +49,7 @@ function EditToolbar(props) {
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [{ id,name: '',code:'', detail: '', amount: null,image:{merchantImg}, isNew: true }, ...oldRows]);
+    setRows((oldRows) => [{ id,name: '',code:'', detail: '', amount: null,merchant:{image:merchantImg,userName:''}, isNew: true }, ...oldRows]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
