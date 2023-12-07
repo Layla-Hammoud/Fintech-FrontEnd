@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
-import './GridPromotion.css'
+import '../GridPromotion/GridPromotion.css'
 import merchantImg from '../../Assets/Images/maker-mkr-logo.png'
 
 import {
@@ -31,17 +31,14 @@ import {
 
 
 const initialRows = [
-  { id: 1, name: 'promotion1',code:'XSDPOa', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 2, name: 'promotion2',code:'XSDPOb', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 3, name: 'promotion3',code:'XSDPOc', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 4, name: 'promotion4',code:'XSDPOd', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 5, name: 'promotion5',code:'XSDPOe', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 6, name: 'promotion6',code:'XSDPOf', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 7, name: 'promotion7',code:'XSDPOg', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 8, name: 'promotion8',code:'XSDPOh', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-];
-
-
+  { id: 1, userName: 'promotion1',email:'XSDPOa',createdAt: '10-1-2024', image:merchantImg,role:'admin'},
+  { id: 2, userName: 'promotion2',email:'XSDPOb',createdAt: '10-1-2024', image:merchantImg,role:'user'},
+  { id: 3, userName: 'promotion3',email:'XSDPOc',createdAt: '10-1-2024', image:merchantImg,role:'merchant'},
+  { id: 4, userName: 'promotion4',email:'XSDPOd',createdAt: '10-1-2024', image:merchantImg,role:'user'},
+  { id: 5, userName: 'promotion5',email:'XSDPOe',createdAt: '10-1-2024', image:merchantImg,role:'merchant'},
+  { id: 6, userName: 'promotion6',email:'XSDPOf',createdAt: '10-1-2024', image:merchantImg,role:'user'},
+  { id: 7, userName: 'promotion7',email:'XSDPOg',createdAt: '10-1-2024', image:merchantImg,role:'user'},
+  { id: 8, userName: 'promotion8',email:'XSDPOh',createdAt: '10-1-2024', image:merchantImg,role:'merchant'},]
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
@@ -102,7 +99,7 @@ function EditToolbar(props) {
   );
 }
 
-export default function GridPromotion() {
+export default function GridUser() {
   const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState({});
   const [page, setPage] = React.useState(1);
@@ -164,29 +161,28 @@ export default function GridPromotion() {
     setRowModesModel(newRowModesModel);
   };
 
+
+
   const columns = [
     {
-      field: 'merchant',
-      headerName: 'Promotion Owner',
+      field: 'userName',
+      headerName: 'User',
       width: 250,
       editable: true,
       renderCell: (params) => (
         <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
           <img
-            src={params.row.merchant.image}
-            alt={`${params.row.merchant.userName}`}
+            src={params.row.image}
+            alt={`${params.row.userName}`}
             style={{ width: 35, height: 35, marginRight: 10 }}
           />
-          {params.row.merchant.userName}
+          <p>{params.row.userName}</p>
         </div>
       ),
     },
-    { field: 'name', headerName: 'Name', width: 225, editable: true },
-    { field: 'code', headerName: 'Code', width: 200, editable: true },
-    { field: 'detail', headerName: 'Description', width: 400, align: 'left', headerAlign: 'left', editable: true, },
-    { field: 'amount', headerName: 'Discount %', headerAlign: 'left', type: 'number', align: 'left', width: 150, editable: true, },
-    { field: 'startDate', headerAlign: 'left', type: 'Date', headerName: 'Start Date', width: 200, editable: true },
-    { field: 'endDate', headerAlign: 'left', headerName: 'End Date', type: 'Date', width: 200, editable: true, },
+    { field: 'email', headerName: 'Email', width: 400, editable: true },
+    { field: 'role', headerName: 'Role', headerAlign: 'left', type: 'number', align: 'left', width: 200, editable: true, },
+    { field: 'createdAt', headerAlign: 'left', type: 'Date', headerName: 'Created At', width: 200, editable: true },
     {
       field: 'actions', headerAlign: 'left', align: 'left', type: 'actions', headerName: 'Actions', width: 100, cellClassName: 'actions',
       getActions: ({ id }) => {
@@ -236,14 +232,14 @@ export default function GridPromotion() {
       sx={{
         display: 'block',
         height: 650,
-        width: '90% ',
+        width: '60% ',
         '& .actions': {
           color: 'text.secondary',
         },
         '& .textPrimary': {
           color: 'text.primary',
         },
-        marginLeft: '130px',
+        marginLeft: '20%',
         marginTop: '120px',
         '@media(width<500px)': {
           marginLeft: 'auto',
