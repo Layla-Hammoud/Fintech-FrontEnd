@@ -7,7 +7,8 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import './GridPromotion.css'
-// import { useState } from 'react-router-dom'
+import merchantImg from '../../Assets/Images/maker-mkr-logo.png'
+
 import {
   GridRowModes,
   DataGrid,
@@ -28,15 +29,16 @@ import {
 } from '@mui/x-data-grid-generator';
 
 
+
 const initialRows = [
-  { id: 1, name: 'promotion1', description: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024' },
-  { id: 2, name: 'promotion2', description: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024' },
-  { id: 3, name: 'promotion3', description: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024' },
-  { id: 4, name: 'promotion4', description: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024' },
-  { id: 5, name: 'promotion5', description: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024' },
-  { id: 6, name: 'promotion6', description: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024' },
-  { id: 7, name: 'promotion7', description: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024' },
-  { id: 8, name: 'promotion8', description: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024' },
+  { id: 1, name: 'promotion1',code:'XSDPOa', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+  { id: 2, name: 'promotion2',code:'XSDPOb', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+  { id: 3, name: 'promotion3',code:'XSDPOc', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+  { id: 4, name: 'promotion4',code:'XSDPOd', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+  { id: 5, name: 'promotion5',code:'XSDPOe', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+  { id: 6, name: 'promotion6',code:'XSDPOf', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+  { id: 7, name: 'promotion7',code:'XSDPOg', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+  { id: 8, name: 'promotion8',code:'XSDPOh', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
 ];
 
 
@@ -47,12 +49,12 @@ function EditToolbar(props) {
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, name: '', age: '', isNew: true }]);
+    setRows((oldRows) => [{ id, name: '', age: '', isNew: true }, ...oldRows]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
     }));
-
+    console.log(id)
 
 
   };
@@ -163,13 +165,30 @@ export default function GridPromotion() {
   };
 
   const columns = [
-    { field: 'name', headerName: 'Name', width: 300, editable: true },
-    { field: 'description', headerName: 'Description', width: 400, align: 'left', headerAlign: 'left', editable: true, },
-    { field: 'amount', headerName: 'Discount %', headerAlign: 'left', type: 'number', align: 'left', width: 205, editable: true, },
-    { field: 'startDate', headerAlign: 'left', type: 'Date', headerName: 'Start Date', width: 215, editable: true },
-    { field: 'endDate', headerAlign: 'left', headerName: 'End Date', type: 'Date', width: 215, editable: true, },
     {
-      field: 'actions', headerAlign: 'left', align: 'left', type: 'actions', headerName: 'Actions', width: 200, cellClassName: 'actions',
+      field: 'merchant',
+      headerName: 'Promotion Owner',
+      width: 250,
+      editable: true,
+      renderCell: (params) => (
+        <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <img
+            src={params.row.merchant.image}
+            alt={`${params.row.merchant.userName}`}
+            style={{ width: 35, height: 35, marginRight: 10 }}
+          />
+          {params.row.merchant.userName}
+        </div>
+      ),
+    },
+    { field: 'name', headerName: 'Name', width: 225, editable: true },
+    { field: 'code', headerName: 'Code', width: 200, editable: true },
+    { field: 'detail', headerName: 'Description', width: 400, align: 'left', headerAlign: 'left', editable: true, },
+    { field: 'amount', headerName: 'Discount %', headerAlign: 'left', type: 'number', align: 'left', width: 150, editable: true, },
+    { field: 'startDate', headerAlign: 'left', type: 'Date', headerName: 'Start Date', width: 200, editable: true },
+    { field: 'endDate', headerAlign: 'left', headerName: 'End Date', type: 'Date', width: 200, editable: true, },
+    {
+      field: 'actions', headerAlign: 'left', align: 'left', type: 'actions', headerName: 'Actions', width: 100, cellClassName: 'actions',
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
@@ -217,7 +236,7 @@ export default function GridPromotion() {
       sx={{
         display: 'block',
         height: 650,
-        width: '80% ',
+        width: '90% ',
         '& .actions': {
           color: 'text.secondary',
         },
@@ -247,7 +266,7 @@ export default function GridPromotion() {
 
       <DataGrid
         className='grid'
-
+        disableRowSelectionOnClick
         rows={visibleRows}
         columns={columns}
         editMode="row"
