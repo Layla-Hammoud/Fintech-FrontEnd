@@ -47,7 +47,7 @@ const initialRows = [
 
 
 function EditToolbar(props) {
-    const { setRows, setRowModesModel } = props;
+
     const [sorting, setSorting] = React.useState('');
 
 
@@ -63,7 +63,7 @@ function EditToolbar(props) {
         }}
         >
            <Button color="primary" startIcon={<AddIcon />}  sx={{ height: '40px', color: 'black' }}> 
-            <Link to=''> Create Transaction </Link>
+            <Link to='' style={{color:'black',textDecoration:'none'}}> Create Transaction </Link>
             </Button>
             
 
@@ -78,7 +78,7 @@ function EditToolbar(props) {
                     },
                 }}
             >
-                <InputLabel id="promotionSorting">Type</InputLabel>
+                <InputLabel id="promotionSorting">Get </InputLabel>
                 <Select
                     labelId="promotionSorting"
                     id="promotionSorting"
