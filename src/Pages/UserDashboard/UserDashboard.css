@@ -1,0 +1,76 @@
+.overViewUser {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-template-rows: auto;
+    gap: 5%;
+    width: 85%;
+    margin: 100px auto 50px auto;
+    box-sizing: border-box;
+}
+
+.firstColumn, .secondColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 110vh;
+}
+
+.Balance {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Balance>div {
+    margin: 0 10px 10px 0;
+}
+
+.oneProgress {
+    margin-top: 100px;
+}
+
+.progresses {
+    width: 100%;
+    padding: 1%;
+}
+
+@media (max-width: 1500px) {
+    .overViewUser {
+        width: 90%;
+        margin: 100px auto 10px 100px;
+        grid-template-columns: 100%;
+    }
+
+    .firstColumn, .secondColumn {
+        height: fit-content;
+    }
+
+    .Balance {
+        display: flex;
+        justify-content: flex-start;
+    }
+}
+
+
+.overViewUser Button:hover {
+    background-color: #119c59 !important;
+}
+
+.overViewUser Button:active {
+    background-color: #119c59 !important;
+}
+
+@media (max-width: 1000px) {
+    .Balance {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 500px) {
+    .overViewUser {
+        margin: 100px auto 0 auto;
+    }
+}

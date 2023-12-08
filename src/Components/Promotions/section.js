@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Paper, Box, Typography, Button } from "@mui/material";
+import { Paper, Box, Typography, Button, Input } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -11,7 +11,7 @@ import imag from '../../Assets/Icons/imag.png'
 import image from '../../Assets/Icons/image.png'
 
 const SectionUserDashboard = () => {
-  const [avatars, setAvatars] = useState([{img, imag, image}]);
+  const [avatars, setAvatars] = useState([{ img, imag, image }]);
   const [showMoreAvatars, setShowMoreAvatars] = useState(false);
 
   const handleClick = () => {
@@ -35,57 +35,58 @@ const SectionUserDashboard = () => {
     <Paper
       sx={{
         width: '100%',
-        maxWidth: "577px",
         height: "340px",
         '@media(minWidth:280px': { width: '90%' },
       }}
     >
-      <Box sx={{ maxWidth: '100', marginLeft: '3rem' }}>
-        <Typography sx={{ paddingTop: '1rem', fontWeight: 'semibold', fontSize: '22px' }}>
+      <Box sx={{ maxWidth: '100', p: '12px',display:'flex' ,flexDirection:'column'}}>
+        <Typography sx={{ paddingTop: '1rem', fontWeight: 'bold', fontSize: '22px' }}>
           Quick Transfer
         </Typography>
-        <Box
+
+        <TextField
+          id="outlined-basic"
+          label="UserName"
+          variant="outlined"
           sx={{
-            overflowX: 'auto',
-            whiteSpace: 'wrap',
-            paddingTop: '3rem',
-            '@media(minWidth:280px)': { display: 'flex', flexDirection: 'column' },
+            width: '100%', maxWidth: '497px', marginTop: '1rem', '@media(minWidth:280px)': { maxWidth: '50px' },
+            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+            {
+              borderColor: "#119c59",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: "#119c59",
+            },
+            
           }}
-        >
+        />
 
-        <Stack
-          direction="row"
-          spacing={4}
-          
-        >
-          {avatars.map((avatar, index) => (
-            <Avatar key={index} alt={`Avatar-${index}`} src={avatar} />
-          ))}
-          {showMoreAvatars ? (
-            <ArrowBackIosNewIcon
-              onClick={handleBackClick}
-              sx={{ cursor: 'pointer', paddingTop: '0.5rem' }}
-            />
-          ) : (
-            <ArrowForwardIosIcon
-              onClick={handleClick}
-              sx={{ cursor: 'pointer', paddingTop: '0.5rem' }}
-            />
-          )}
-        </Stack>
-        </Box>
-
-        <Typography sx={{ marginTop: '1rem', color: '#AFAFAF', fontSize: '16px' }}>Username</Typography>
         <TextField
           id="outlined-basic"
           label="Amount"
           variant="outlined"
-          sx={{ width: '100%', maxWidth: '497px', marginTop: '1rem', '@media(minWidth:280px)': { maxWidth: '50px' } }}
+          sx={{
+            width: '100%', maxWidth: '497px', marginTop: '1rem',
+            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+            {
+              borderColor: "#119c59",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: "#119c59",
+            },
+            '@media(minWidth:280px)': { maxWidth: '50px' }
+          }}
         />
+
+
         <Button
+          //add button to add transfer
+          // onClick={}
           variant="contained"
           disableElevation
-          sx={{ marginTop: '1rem', borderRadius: '12px', backgroundColor: '#119C59', width: '100%', maxWidth: '241px', textAlign: 'center' }}
+          sx={{
+            marginTop: '1rem', borderRadius: '5px', width: '20%', maxWidth: '241px', textAlign: 'center', backgroundColor: '#119C59',
+          }}
         >
           Send money
         </Button>

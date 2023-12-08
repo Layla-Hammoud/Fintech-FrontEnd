@@ -22,17 +22,12 @@ const StatisticCard = () => {
         variant="outlined"
         sx={{
           borderColor: "#E6E9EE",
-          width: "575px",
-          height: "400px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          alignItems: "start",
+          width: "100%",
+          height: "auto",
           borderRadius: "20px",
-          margin: "20px",
           "& img": { marginTop: "1.5rem" },
           "@media (max-width: 700px)": {
-            width: "80%",
+            width: "100%",
             margin: "auto",
           },
           "@media (min-width: 280px)": {
@@ -50,20 +45,24 @@ const StatisticCard = () => {
           <Typography
             variant="p"
             sx={{
-              fontWeight: "bold",
-              fontSize: "1.5em",
+              fontWeight: 'bold', fontSize: '22px' 
             }}
           >
             Process
           </Typography>
           <FormControl
+
             sx={{
-              m: 1,
-              minWidth: 120,
+              width: '150px',
+              height: '100px',
+              overflow: 'hidden',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                {
-                  borderColor: "#119c59",
-                },
+              {
+                borderColor: "#119c59",
+              },
               "& .MuiInputLabel-root.Mui-focused": {
                 color: "#119c59",
               },
@@ -72,6 +71,7 @@ const StatisticCard = () => {
           >
             <InputLabel id="demo-select-small-label">Time</InputLabel>
             <Select
+              sx={{ width: '100px', m: 0 }}
               labelId="demo-select-small-label"
               id="demo-select-small"
               value={time}
@@ -92,19 +92,19 @@ const StatisticCard = () => {
           }}
         >
           <Box>
-            <p style={{color:"#AFAFAF"}}>Income</p>
+            <p style={{ color: "#AFAFAF" }}>Income</p>
             <p>
               <strong>$473</strong>
             </p>
           </Box>
           <Box>
-            <p style={{color:"#AFAFAF"}}>Expenses</p>{" "}
+            <p style={{ color: "#AFAFAF" }}>Expenses</p>{" "}
             <p>
               <strong>$473</strong>
             </p>
           </Box>
           <Box>
-            <p style={{color:"#AFAFAF"}}>Saving</p>{" "}
+            <p style={{ color: "#AFAFAF" }}>Saving</p>{" "}
             <p>
               <strong>$473</strong>
             </p>
@@ -136,20 +136,16 @@ const StatisticCard = () => {
                 ],
               },
             ]}
-            width={400}
-            height={200}
+           
             sx={{
               "@media (max-width: 700px)": {
-                ".css-66gjpw-MuiResponsiveChart-container": {
-                  width: "200px",
-                  height: "150px",
-                },
                 ".MuiChartsLegend-root.MuiChartsLegend-column.css-1u0lry5-MuiChartsLegend-root":
-                  {
-                    display: "none",
-                  },
-              },
-            }}
+                {
+                  display: "none",
+                }
+            }}} 
+            width={400}
+            height={200}
           />
         </Box>
       </Paper>
