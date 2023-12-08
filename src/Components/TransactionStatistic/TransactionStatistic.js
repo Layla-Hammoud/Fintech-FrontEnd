@@ -30,21 +30,24 @@ const xLabels = [
         variant="outlined"
         sx={{
           borderColor: "#E6E9EE",
-          width: "60%",
-          height: "400px",
+          width: "75%",
+          height: "424px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           alignItems: "start",
           borderRadius: "20px",
-          margin: "20px",
           "& img": { marginTop: "1.5rem" },
-          "@media (max-width: 700px)": {
-            width: "80%",
+          "@media (max-width: 1570px)": {
+            width: "100%",
             margin: "auto",
+            marginBottom:"1em"
+          },
+          "@media (min-width: 475px)": {
+            padding: "1.5em 2em",
           },
           "@media (min-width: 280px)": {
-            padding: "1.5em 2em",
+            padding: "1em 1em",
           },
         }}
       >
@@ -53,6 +56,9 @@ const xLabels = [
             width:"100%",
             display: "flex",
             justifyContent: "space-between",
+            "@media (max-width: 700px)": {
+              flexDirection:"column"
+            },
           }}
         >
           <p style={{fontSize:"1.5em"}}><strong>Total Transaction</strong></p>

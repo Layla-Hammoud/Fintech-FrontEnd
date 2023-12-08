@@ -74,7 +74,7 @@ function TransactionTable() {
 
     //still sorting according to the option// 
     return (
-        <div style={{ width: '60%', border: '1px solid #D9D9D9', margin: '10px', padding: '20px' }}>
+        <div style={{ width: '100%', border: '1px solid #D9D9D9', margin: '10px', padding: '20px' }}>
             <Box className="Box" display='flex' justifyContent='space-between' sx={{ width: '100%', marginBottom: 5 }}>
                 <Typography className='tableTitle' variant='h5'>Transaction Confirmation</Typography>
                 {(windowWidth >= 675) ? <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: 300 }}>
