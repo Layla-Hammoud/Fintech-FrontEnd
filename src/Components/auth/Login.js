@@ -2,7 +2,7 @@ import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import "./auth.css";
 import { Link, useNavigate } from "react-router-dom";
 import useApi from "../../hooks/useApi";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 const Login = () => {

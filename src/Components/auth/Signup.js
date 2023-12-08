@@ -10,9 +10,11 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
+import useApi from "../../hooks/useApi";
 import "./auth.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -25,6 +27,8 @@ const MenuProps = {
 };
 
 const Signup = () => {
+  const [loading, setLoading] = useState(false);
+  const { apiCall } = useApi();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -40,7 +44,12 @@ const Signup = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+    setLoading(true);
+    if (!formData.email || !formData.password) {
+      toast.error("Please insert email or password");
+      setLoading(false);
+      return;
+    }
     setFormData({
       name: "",
       email: "",

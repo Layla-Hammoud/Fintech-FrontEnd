@@ -12,6 +12,7 @@ import GridTransaction from "../Components/GridTransaction/GridTransaction";
 import GridPromotion from "../Components/GridPromotion/GridPromotion";
 import LoginPage from "../Pages/Login/LoginPage.js"
 import ProtectedRoute from "./ProtectedRoute.js";
+import MerchantDashboard from "../Pages/MerchantDashboard/MerchantDashboard.js";
 const AppRoutes = () => {
   return (
       <Routes>
@@ -20,6 +21,7 @@ const AppRoutes = () => {
         <Route path="/signup" element={<SignupPage />}></Route>
         {/* <Route element={<ProtectedRoute allowedRoles={['user']} />}> */}
         <Route path="/wallet" element={<SideBar />}>
+          <Route index element={<MerchantDashboard />} />
           <Route path="users" element={<GridUser />} />
           <Route path="history" element={<TransactionTable />} />
           <Route path="transaction" element={<GridPromotion />} />
