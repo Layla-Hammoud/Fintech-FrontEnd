@@ -7,14 +7,18 @@ import './UserDashboard.css'
 function UserDashboard() {
     return (
         <div className='overViewUser'>
-            <section className='Balance'>
-            <CardBalance title='USD Balance' titleColor='#FFF4F4' amount={255000} unit='$' backGroundColor='#4CD080' borderColor='#0F5533' />
-            <CardBalance   title='USDT Balance'  titleColor='#FFF4F4' amount={1076754.77} unit='T' backGroundColor='#FF9C33' borderColor='#924418'/>
+            <div className='firstColumn'> 
+             <section className='Balance'>
+                <CardBalance title='USD Balance' titleColor='#FFF4F4' amount={255000} unit='$' backGroundColor='#4CD080' borderColor='#0F5533' />
+                <CardBalance title='USDT Balance' titleColor='#FFF4F4' amount={1076754.77} unit='T' backGroundColor='#FF9C33' borderColor='#924418' />
             </section>
+                <StatisticCard />
+                <SectionUserDashboard />
+            </div>
+            <div className='secondColumn'>
             <SavingSection />
-            <StatisticCard />
-            <SectionUserDashboard />
             <TransactionTable />
+</div>
         </div>
     )
 }

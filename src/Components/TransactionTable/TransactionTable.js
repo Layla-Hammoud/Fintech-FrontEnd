@@ -66,17 +66,17 @@ function TransactionTable() {
     }
 
 
-    let style1 = { backgroundColor: '#4CD080', borderRadius: 5, p: 0.8, color: 'white', width: 60, textAlign: "center" };
-    let style2 = { borderRadius: 5, p: 0.8, width: 60, textAlign: "center" };
+    let style1 = { backgroundColor: '#119C59', borderRadius: 1, p:1, color: 'white', width: 70, textAlign: "center" };
+    let style2 = { borderRadius: 5, p:1, width: 60, textAlign: "center" };
 
 
 
 
     //still sorting according to the option// 
     return (
-        <div style={{ width: '100%', border: '1px solid #D9D9D9', margin: '10px', padding: '20px' }}>
+        <div style={{ width: '100%', border: '1px solid #D9D9D9', padding: '20px' }}>
             <Box className="Box" display='flex' justifyContent='space-between' sx={{ width: '100%', marginBottom: 5 }}>
-                <Typography className='tableTitle' variant='h5'>Transaction Confirmation</Typography>
+                <Typography className='tableTitle' variant='h5' sx={{ fontWeight: 'bold', fontSize: '22px' }}>Transaction Confirmation</Typography>
                 {(windowWidth >= 675) ? <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: 300 }}>
                     <Typography onClick={() => handelOption('All')} sx={activeOption === 'All' ? style1 : style2} >All</Typography>
                     <Typography onClick={() => handelOption('Monthly')} sx={activeOption === 'Monthly' ? style1 : style2} >Monthly</Typography>
@@ -111,7 +111,7 @@ function TransactionTable() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.slice(page * 4, page * 4 + 4).map((row) => (
+                        {rows.slice(page * 7, page * 7 + 7).map((row) => (
                             <TableRow key={row.id} sx={{ "&: -child td": { border: 0, background: 'red' } }}>
                                 <TableCell>{row.amountSent}</TableCell>
                                 <TableCell>{row.amountReceived}</TableCell>
@@ -125,7 +125,7 @@ function TransactionTable() {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[4]}
+                rowsPerPageOptions={[7]}
                 component="div"
                 count={rows.length}
                 rowsPerPage={4}

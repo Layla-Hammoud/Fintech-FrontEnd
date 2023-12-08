@@ -33,15 +33,16 @@ const ProgressSaving = ({ goalAmount, title, amount }) => {
                     value={((amount * 100) / goalAmount)}
                     sx={{
                         '& .MuiLinearProgress-bar': {
-                            backgroundColor: 'green'
+                            backgroundColor: '#4CD080'
                         },
-                        backgroundColor: '#96D4AE',
+                        backgroundColor: '#F5F6FA',
                         width: '70%',
-                        borderRadius: '10px'
+                        borderRadius: '10px',
+                        height:'7px'
                     }}
                 />
 
-                <Typography sx={{ fontWeight: 600 }}>$ {amount}<IconButton edge="end" color="primary" >
+                <Typography sx={{ fontWeight: 600 , '@media(width<500px)':{fontSize:'15px'}}}>$ {amount}<IconButton edge="end" color="primary" >
                     <Icon sx={{ color: "green", borderRadius: '50px', backgroundColor: '#EFECEC', textAlign: 'center' }} onClick={() => { handleOpenModal() }} >+</Icon>
                 </IconButton></Typography>
 
