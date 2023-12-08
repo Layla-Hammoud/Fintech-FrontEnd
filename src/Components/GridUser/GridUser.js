@@ -46,7 +46,7 @@ function EditToolbar(props) {
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [{ id, name: '', age: '', isNew: true }, ...oldRows]);
+    setRows((oldRows) => [{ id, userName: '',email:'',image:merchantImg,role:'', isNew: true }, ...oldRows]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
@@ -68,7 +68,7 @@ function EditToolbar(props) {
     }}
     >
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClick} sx={{ height: '40px', color: 'black' }}>
-        Add promotion
+        Add User
       </Button>
 
       <FormControl
@@ -82,7 +82,7 @@ function EditToolbar(props) {
           },
         }}
       >
-        <InputLabel id="promotionSorting">Type</InputLabel>
+        <InputLabel id="promotionSorting">Get</InputLabel>
         <Select
           labelId="promotionSorting"
           id="promotionSorting"

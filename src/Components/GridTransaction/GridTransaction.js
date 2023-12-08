@@ -7,8 +7,8 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import '../GridPromotion/GridPromotion.css'
-
-
+import {Link} from 'react-router-dom'
+import merchantImg from '../../Assets/Images/maker-mkr-logo.png'
 
 import {
     GridRowModes,
@@ -47,20 +47,9 @@ const initialRows = [
 
 
 function EditToolbar(props) {
-    const { setRows, setRowModesModel } = props;
+
     const [sorting, setSorting] = React.useState('');
 
-    const handleClick = () => {
-        const id = randomId();
-        setRows((oldRows) => [...oldRows, { id, name: '', age: '', isNew: true }]);
-        setRowModesModel((oldModel) => ({
-            ...oldModel,
-            [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-        }));
-
-
-
-    };
 
     return (
         <GridToolbarContainer sx={{
@@ -73,9 +62,10 @@ function EditToolbar(props) {
             },
         }}
         >
-            <Button color="primary" startIcon={<AddIcon />} onClick={handleClick} sx={{ height: '40px', color: 'black' }}>
-                Add promotion
+           <Button color="primary" startIcon={<AddIcon />}  sx={{ height: '40px', color: 'black' }}> 
+            <Link to='' style={{color:'black',textDecoration:'none'}}> Create Transaction </Link>
             </Button>
+            
 
             <FormControl
                 sx={{
@@ -88,7 +78,7 @@ function EditToolbar(props) {
                     },
                 }}
             >
-                <InputLabel id="promotionSorting">Type</InputLabel>
+                <InputLabel id="promotionSorting">Get </InputLabel>
                 <Select
                     labelId="promotionSorting"
                     id="promotionSorting"
