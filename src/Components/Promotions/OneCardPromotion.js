@@ -57,13 +57,14 @@ const OneCardPromotion = ({ name, amount, detail, startDate }) => {
             borderRadius: "20px",
             "& img": { marginTop: "1.5rem" },
             "@media (min-width: 280px)": {
-              margin: "4em",
+            
+
               maxWidth: "100%",
             },
           }}
         >
           <img src={maker} alt="maker" />
-          <Box sx={{ marginRight: "6rem", mt: "1.3rem" }}>
+          <Box sx={{ marginRight: "6rem", mt: "1.3rem","@media(min-width:280px and max-width:1200px) ":{marginRight:'3rem'} }}>
             <Box>
               <Typography variant="p">{name}</Typography>
               <Typography

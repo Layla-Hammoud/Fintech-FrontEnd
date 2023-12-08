@@ -66,7 +66,8 @@ const PromotionCards = () => {
           marginY: 10,
           display: "flex",
           flexDirection: "column",
-          "@media(min-width:280px)": {
+          "@media(min-width:280px and max-width:1200px) ": {
+            width:'80%%',
             display: "flex",
             flexDirection: "column",
             marginLeft:'2rem'
