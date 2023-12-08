@@ -3,10 +3,20 @@ import { Container, Typography, Button, Box } from '@mui/material';
 import ProgressSaving from "./ProgressSaving.js";
 // import BasicModal from "./BasicModal.js";
 const SavingSection = () => {
+    let data = [
+        { title: 'Tv', goalAmount: 400, amount: 87 },
+        { title: 'Car', goalAmount: 4558, amount: 2887 },
+        { title: 'House', goalAmount: 45588, amount: 7777 },
+
+    ]
+
 
     return (
         <Container sx={{
-            maxWidth: 'md', padding: '20px', margin:'auto',
+            width:'50%',
+            border:'1px solid #E6E9EE',
+            borderRadius:'5px',
+            margin:0
         }}>
             <Box sx={{
                 display: "flex",
@@ -15,25 +25,21 @@ const SavingSection = () => {
                 marginBottom: '10px',
                 marginTop: '10px',
                 '& > *': {
-                    marginRight: '285px', 
-                  },
+                    marginRight: '285px',
+                },
             }}>
-             
-                
-                <Typography variant="h4" sx={{
-                    margin: 0
-                }}>My Savings</Typography>
-                <Button variant="contained" color="success" sx={{
-                    marginLeft: '100px',
-                }}>ADD +</Button>
+
+
+                <Typography variant="h5" sx={{fontWeight:600}}>My Savings</Typography>
+                <Button variant="contained" color="success" >ADD +</Button>
 
             </Box>
-            
+            <Box className='progresses'>
+                {data.map((goal, i) => (
+                    <ProgressSaving  title={goal.title} goalAmount={goal.goalAmount} amount={goal.amount} key={i} />
+                ))}
+            </Box>
 
-            <ProgressSaving title="TV" goalAmount={500} amount={309} />
-            <ProgressSaving title="Game" goalAmount={900} amount={500} />
-            <ProgressSaving title="Trip" goalAmount={450} amount={150} />
-           
         </Container>
     )
 }

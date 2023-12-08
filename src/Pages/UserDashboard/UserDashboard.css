@@ -5,8 +5,18 @@
 
 .Balance {
 
-    width: 40%;
+    width: 50%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.oneProgress{
+    margin-top: 100px;
+}
+
+.progresses{
+    width: 100%;
+    padding: 1%;
+
 }
