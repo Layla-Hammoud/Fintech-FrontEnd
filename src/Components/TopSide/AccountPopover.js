@@ -15,7 +15,7 @@ const handlelogOut = async () =>{
      method: "post",
    });
    toast.success("Logged out Successfully!")
-   navigate('/login')
+   navigate('/')
 
  } catch (error) {
    console.log(error);

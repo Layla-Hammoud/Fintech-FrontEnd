@@ -70,7 +70,7 @@ const Signup = () => {
             <Stack spacing={1} sx={{ mb: 3 }}>
               <Typography variant="h4">Register</Typography>
               <Typography variant="body2">
-                Already have an account? <Link to="/sign-in">Log in</Link>
+                Already have an account? <Link to="/">Log in</Link>
               </Typography>
             </Stack>
             <form onSubmit={handleSubmit}>

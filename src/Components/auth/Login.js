@@ -47,7 +47,7 @@ const Login = () => {
       await fetchUserData();
       toast.success("Logged in Successfully!");
       setLoading(false);
-      navigate("/");
+      navigate("/wallet");
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         const { errors } = error.response.data;
@@ -87,7 +87,7 @@ const Login = () => {
             <Stack spacing={1} sx={{ mb: 3 }}>
               <Typography variant="h4">Log In</Typography>
               <Typography variant="body2">
-                Don't have an account? <Link to="/sign-up">Sign up</Link>
+                Don't have an account? <Link to="/signup">Sign up</Link>
               </Typography>
             </Stack>
             <form onSubmit={handleSubmit}>
