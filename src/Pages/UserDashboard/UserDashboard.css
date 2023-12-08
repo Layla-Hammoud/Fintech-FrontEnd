@@ -1,0 +1,12 @@
+.overViewUser {
+    width: 90%;
+    margin: 100px auto 10px 100px;
+}
+
+.Balance {
+
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
