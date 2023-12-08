@@ -1,12 +1,15 @@
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import "./auth.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useApi from "../../hooks/useApi";
-import { toast } from "react-toastify";
-import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const { fetchUserData } = useContext(AuthContext);
   const { apiCall } = useApi();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -32,7 +35,7 @@ const Login = () => {
     });
 
     try {
-       await apiCall({
+      await apiCall({
         url: "/api/users/login",
         method: "post",
         data: {
@@ -41,14 +44,24 @@ const Login = () => {
         },
       });
 
-      // await fetchUserData()
-      // toast.success("Logged in Successfully!")
-      // setLoading(false);
-      // navigate('/')
-    } catch (error) {
-      console.log(error);
-
+      await fetchUserData();
+      toast.success("Logged in Successfully!");
       setLoading(false);
+      navigate("/");
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.errors) {
+        const { errors } = error.response.data;
+
+        if (errors.email) {
+          const emailError = errors.email;
+          toast.error(emailError);
+        }
+        if (errors.password) {
+          const passwordError = errors.password;
+          toast.error(passwordError);
+        }
+        setLoading(false);
+      }
     }
   };
 

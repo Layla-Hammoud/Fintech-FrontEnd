@@ -1,21 +1,28 @@
 // import { useCallback } from 'react';
 // import { useRouter } from 'next/navigation';
 import { Box, Divider, MenuItem, MenuList, Popover, Typography } from '@mui/material';
-
-
+import useApi from "../../hooks/useApi";
+import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open } = props;
-//   const router = useRouter();
-//   const auth = useAuth();
+  const { apiCall } = useApi();
+  const navigate = useNavigate();
+const handlelogOut = async () =>{
+  try {
+     await apiCall({
+     url: "/api/users/logout",
+     method: "post",
+   });
+   toast.success("Logged out Successfully!")
+   navigate('/login')
 
-  // const handleSignOut = useCallback(
-  //   () => {
-  //     onClose?.();
-  //     auth.signOut();
-  //     router.push('/auth/login');
-  //   },
-  //   [onClose, auth, router]
-  // );
+ } catch (error) {
+   console.log(error);
+
+
+ }
+}
 
   return (
     <Popover
@@ -55,7 +62,7 @@ export const AccountPopover = (props) => {
           }
         }}
       >
-        <MenuItem>
+        <MenuItem onClick={handlelogOut}>
           Sign out
         </MenuItem>
       </MenuList>
