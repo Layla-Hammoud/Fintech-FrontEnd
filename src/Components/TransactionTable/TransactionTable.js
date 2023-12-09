@@ -17,7 +17,6 @@ import useApi from "../../hooks/useApi";
 import { toast } from "react-toastify";
 function TransactionTable() {
   const [rows, setRows] = useState([]);
-  const [totalItems, setTotalItems] = useState(0);
   const { apiCall } = useApi();
 
   const [activeOption, setActiveOption] = useState("All");
@@ -36,7 +35,6 @@ function TransactionTable() {
           });
           console.log(response)
           setRows(response.data);
-          setTotalItems(response.totalItems);
         } catch (error) {
           toast.error(error.response)
         }
