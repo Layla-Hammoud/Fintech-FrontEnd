@@ -2,28 +2,59 @@ import React, { useState, useEffect } from 'react'
 import { Box, Typography } from '@mui/material'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, MenuItem, Select } from '@mui/material';
 import './TransactionTable.css'
+import useApi from '../../hooks/useApi'
+
 function TransactionTable() {
     //data  istead of id should  userName (population)
-    const rows = [
-        { id: 1, amountSent: 100, amountReceived: 90, type: 'transaction', status: 'completed', senderId: 1, receiverId: 2 },
-        { id: 2, amountSent: 400, amountReceived: 400, type: 'transaction', status: 'canceled', senderId: 1, receiverId: 2 },
-        { id: 3, amountSent: 500, amountReceived: 600, type: 'transaction', status: 'pending', senderId: 1, receiverId: 2 },
-        { id: 4, amountSent: 600, amountReceived: 600, type: 'transaction', status: 'completed', senderId: 1, receiverId: 2 },
-        { id: 5, amountSent: 600, amountReceived: 600, type: 'transaction', status: 'completed', senderId: 1, receiverId: 2 },
-        { id: 6, amountSent: 600, amountReceived: 600, type: 'transaction', status: 'canceled', senderId: 1, receiverId: 2 },
-        { id: 7, amountSent: 600, amountReceived: 600, type: 'transaction', status: 'completed', senderId: 1, receiverId: 2 },
-        { id: 8, amountSent: 600, amountReceived: 600, type: 'transaction', status: 'pending', senderId: 1, receiverId: 2 },
+    // const dataTransactions = [
+    //     { id: 1, amountSent: 100, amountReceived: 90, type: 'transaction', status: 'completed', senderId: 1, receiverId: 2 },
+    //     { id: 2, amountSent: 400, amountReceived: 400, type: 'transaction', status: 'canceled', senderId: 1, receiverId: 2 },
+    //     { id: 3, amountSent: 500, amountReceived: 600, type: 'transaction', status: 'pending', senderId: 1, receiverId: 2 },
+    //     { id: 4, amountSent: 600, amountReceived: 600, type: 'transaction', status: 'completed', senderId: 1, receiverId: 2 },
+    //     { id: 5, amountSent: 600, amountReceived: 600, type: 'transaction', status: 'completed', senderId: 1, receiverId: 2 },
+    //     { id: 6, amountSent: 600, amountReceived: 600, type: 'transaction', status: 'canceled', senderId: 1, receiverId: 2 },
+    //     { id: 7, amountSent: 600, amountReceived: 600, type: 'transaction', status: 'completed', senderId: 1, receiverId: 2 },
+    //     { id: 8, amountSent: 600, amountReceived: 600, type: 'transaction', status: 'pending', senderId: 1, receiverId: 2 },
 
 
-    ];
+    // ];
 
 
+    const { apiCall } = useApi();
+    const fetching = async () => {
+
+
+        try {
+            const data = await apiCall({
+                url: '/transactions/transactionForUser',
+                method: 'GET',
+                data: { id: 1 }
+            })
+            if (data !== null) {
+                console.log(data);
+                setDataTransactions(data)
+                setStill(true)
+            }
+
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+    const [dataTransactions, setDataTransactions] = useState([]);
+    const [still, setStill] = useState(false);
     const [activeOption, setActiveOption] = useState('All');
     const [page, setPage] = useState(0);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
+
+
+    useEffect(() => {
+        fetching();
+
+    }, [dataTransactions])
 
 
     //handel options for filtring data
@@ -66,15 +97,15 @@ function TransactionTable() {
     }
 
 
-    let style1 = { backgroundColor: '#119C59', borderRadius: 1, p:1, color: 'white', width: 70, textAlign: "center" };
-    let style2 = { borderRadius: 5, p:1, width: 60, textAlign: "center" };
+    let style1 = { backgroundColor: '#119C59', borderRadius: 1, p: 1, color: 'white', width: 70, textAlign: "center" };
+    let style2 = { borderRadius: 5, p: 1, width: 60, textAlign: "center" };
 
 
 
 
     //still sorting according to the option// 
     return (
-        <div style={{ width: '100%', border: '1px solid #D9D9D9', padding: '20px' }}>
+        (still) ? <div style={{ width: '100%', border: '1px solid #D9D9D9', padding: '20px' }}>
             <Box className="Box" display='flex' justifyContent='space-between' sx={{ width: '100%', marginBottom: 5 }}>
                 <Typography className='tableTitle' variant='h5' sx={{ fontWeight: 'bold', fontSize: '22px' }}>Transaction Confirmation</Typography>
                 {(windowWidth >= 675) ? <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: 300 }}>
@@ -111,7 +142,7 @@ function TransactionTable() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.slice(page * 7, page * 7 + 7).map((row) => (
+                        {dataTransactions.slice(page * 7, page * 7 + 7).map((row) => (
                             <TableRow key={row.id} sx={{ "&: -child td": { border: 0, background: 'red' } }}>
                                 <TableCell>{row.amountSent}</TableCell>
                                 <TableCell>{row.amountReceived}</TableCell>
@@ -127,12 +158,13 @@ function TransactionTable() {
             <TablePagination
                 rowsPerPageOptions={[7]}
                 component="div"
-                count={rows.length}
+                count={dataTransactions.length}
                 rowsPerPage={4}
                 page={page}
                 onPageChange={handleChangePage}
             />
         </div>
+            : <div>No data yet</div>
     )
 }
 
