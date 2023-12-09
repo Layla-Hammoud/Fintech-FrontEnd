@@ -9,7 +9,7 @@ const MerchantDashboard = () => {
   const { apiCall } = useApi();
   const [wallet,setWallet] = useState({})
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchWallet = async () => {
       try {
         const response = await apiCall({
           url: "/api/wallet/view/2",
@@ -20,8 +20,21 @@ const MerchantDashboard = () => {
         console.error("Error fetching data:", error);
       }
     };
+
+    const fetchTransaction = async () => {
+      try {
+        const response = await apiCall({
+          url: "/api/wallet/view/2",
+          method: "get",
+        });
+        setWallet(response.data)
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
   
-    fetchData();
+    fetchWallet();
   }, []);
   return (
     <>
