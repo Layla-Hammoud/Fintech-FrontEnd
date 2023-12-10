@@ -2,9 +2,12 @@
 // import { useRouter } from 'next/navigation';
 import { Box, Divider, MenuItem, MenuList, Popover, Typography } from '@mui/material';
 import useApi from "../../hooks/useApi";
+import { AuthContext } from '../../Context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
+import { useContext } from 'react';
 export const AccountPopover = (props) => {
+  const {user, setUser} = useContext(AuthContext)
   const { anchorEl, onClose, open } = props;
   const { apiCall } = useApi();
   const navigate = useNavigate();
@@ -14,6 +17,7 @@ const handlelogOut = async () =>{
      url: "/api/users/logout",
      method: "post",
    });
+   setUser(null)
    toast.success("Logged out Successfully!")
    navigate('/')
 

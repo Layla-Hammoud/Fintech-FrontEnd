@@ -3,10 +3,11 @@ import "./auth.css";
 import { Link, useNavigate } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 import { toast } from "react-toastify";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const { user, checkUser } = useContext(AuthContext);
   const { fetchUserData } = useContext(AuthContext);
   const { apiCall } = useApi();
   const navigate = useNavigate();
@@ -47,7 +48,11 @@ const Login = () => {
       await fetchUserData();
       toast.success("Logged in Successfully!");
       setLoading(false);
-      navigate("/wallet");
+      if (user.role === "merchant") {
+        navigate("/wallet/MerchantDashboard");
+      } else if (user.role === "user") {
+        navigate("/wallet/UserDashboard");
+      }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         const { errors } = error.response.data;
@@ -64,6 +69,18 @@ const Login = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    } else if (user && user.role) {
+      if (user.role === "merchant") {
+        navigate("/wallet/MerchantDashboard");
+      } else if (user.role === "user") {
+        navigate("/wallet/UserDashboard");
+      }
+    }
+  }, [user, navigate]);
 
   return (
     <>

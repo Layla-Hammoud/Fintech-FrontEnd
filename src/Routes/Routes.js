@@ -23,16 +23,17 @@ const AppRoutes = () => {
         <Route path="/signup" element={<SignupPage />}></Route>
         {/* <Route element={<ProtectedRoute allowedRoles={['user']} />}> */}
         <Route path="/wallet" element={<SideBar />}>
-          <Route index element={<MerchantDashboard />} />
-          {/* <Route path="UserDashboard" element={<UserDashboard />} /> */}
+          <Route path="MerchantDashboard" element={<MerchantDashboard />} />
+          <Route path="UserDashboard" element={<UserDashboard />} />
+          <Route path="buy-usdt" element={<Merchants />}></Route>
+          <Route path="promotions" element={<Merchants />}></Route>
           <Route path="users" element={<GridUser />} />
           <Route path="history" element={<TransactionTable />} />
           <Route path="transaction" element={<GridPromotion />} />
-          <Route path="promotions" element={<PromotionPage />}></Route>
           <Route path="EditModal" element={<SavingPage />}></Route>
           <Route path="SavingSection" element={<SavingPage />}></Route>
           <Route path="SavingSection" element={<SavingPage />}></Route>
-          <Route path="merchants" element={<Merchants />}></Route>
+          
         </Route>
         {/* </Route> */}
       </Routes>

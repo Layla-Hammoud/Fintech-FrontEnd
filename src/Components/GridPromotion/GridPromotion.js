@@ -331,7 +331,7 @@ const handleCloseModal = () => {
           <Pagination count={totalPages} page={page} onChange={handlePageChange} className='pagg' />
         </Stack>
 
-        <PromotionMoal isEdit={true} open={openModal} close={handleCloseModal} />
+        <PromotionModal isEdit={true} open={openModal} close={handleCloseModal} />
 
       </Box>
   );
