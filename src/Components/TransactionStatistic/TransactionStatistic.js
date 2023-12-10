@@ -54,7 +54,6 @@ const TransactionStatistic = ({transactions}) => {
 
   const uData = calculateMonthlySum();
   const xLabels = generateMonthLabels();
-  console.log(uData, xLabels);
 
   return (
     <>

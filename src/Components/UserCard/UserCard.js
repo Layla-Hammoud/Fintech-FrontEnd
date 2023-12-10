@@ -3,7 +3,7 @@ import maker from "../../Assets/Images/maker.png";
 import { Typography, Box, Button } from "@mui/material";
 import { useState } from "react";
 import TransactionModel from "../TransactionModel/TransactionModel";
-const UserCard = ({ email, name }) => {
+const UserCard = ({ merchant }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   return (
@@ -34,13 +34,13 @@ const UserCard = ({ email, name }) => {
               fontSize: "1.5em",
             }}
           >
-            {name}
+            {merchant.userName}
           </Typography>
           <Typography
             variant="subtitle1"
             sx={{ marginTop: "0.8rem", width: "100%" }}
           >
-            {email}
+            {merchant.email}
           </Typography>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -56,7 +56,7 @@ const UserCard = ({ email, name }) => {
           >
             Exchange
           </Button>
-          <TransactionModel open={open} setOpen={setOpen} name={name}/>
+          <TransactionModel open={open} setOpen={setOpen} merchant={merchant}/>
         </Box>
       </Paper>
 

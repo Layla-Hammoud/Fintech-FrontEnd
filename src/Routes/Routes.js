@@ -12,6 +12,7 @@ import GridTransaction from "../Components/GridTransaction/GridTransaction";
 import GridPromotion from "../Components/GridPromotion/GridPromotion";
 import LoginPage from "../Pages/Login/LoginPage.js"
 import ProtectedRoute from "./ProtectedRoute.js";
+import Merchants from '../Pages/AllMerchants/Merchants.js'
 import MerchantDashboard from "../Pages/MerchantDashboard/MerchantDashboard.js";
 const AppRoutes = () => {
   return (
@@ -28,6 +29,8 @@ const AppRoutes = () => {
           <Route path="promotions" element={<PromotionPage />}></Route>
           <Route path="EditModal" element={<SavingPage />}></Route>
           <Route path="SavingSection" element={<SavingPage />}></Route>
+          <Route path="SavingSection" element={<SavingPage />}></Route>
+          <Route path="merchants" element={<Merchants />}></Route>
         </Route>
         {/* </Route> */}
       </Routes>

@@ -1,25 +1,26 @@
 import React from "react";
 import UserCard from "../../Components/UserCard/UserCard";
 import { Stack } from "@mui/material";
+import { useEffect,useState } from "react";
+import useApi from "../../hooks/useApi";
 const Merchants = () => {
-  const merchants = [
-    {
-      name: "Alice Johnson",
-      email: "alice.johnson@gmail.com",
-    },
-    {
-      name: "David Smith",
-      email: "david.smith@mailfake.com",
-    },
-    {
-      name: "Emily Brown",
-      email: "emily_brown@fakemail.net",
-    },
-    {
-      name: "Jacob Miller",
-      email: "jacob.miller@fakeinbox.com",
-    },
-  ];
+  const { apiCall } = useApi();
+  const [merchants, setMerchants] = useState([]);
+  useEffect(() => {
+    const fetchMerchants = async () => {
+      try {
+        const response = await apiCall({
+          url: "/api/users/merchants",
+          method: "get",
+        });
+        setMerchants(response.data)
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchMerchants();
+  }, []);
+  
   return (
     <>
     <Stack
@@ -41,8 +42,7 @@ const Merchants = () => {
       {merchants.map((merchant, index) => (
         <UserCard
           key={index} // Using index as the key, consider a more unique key if available
-          name={merchant.name}
-          email={merchant.email}
+          merchant={merchant}
         />
       ))}
       </Stack>
