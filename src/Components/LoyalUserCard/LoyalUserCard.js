@@ -31,9 +31,9 @@ const LoyalUserCard = () => {
         height: "424px",
         borderRadius: "5px",
         marginBottom:"20px",
-        // "@media (max-width:1570px)": {
-        //   display:"none"
-        // },
+        "@media (max-width:1570px)": {
+          display:"none"
+        },
         "@media (max-width:280px)": {
           width: "200px"
         },
