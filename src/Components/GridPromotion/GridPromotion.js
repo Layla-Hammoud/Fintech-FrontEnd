@@ -1,3 +1,4 @@
+import { FetchData } from '../../fetch/fetchData';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -8,6 +9,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import './GridPromotion.css'
 import merchantImg from '../../Assets/Images/maker-mkr-logo.png'
+import axios from 'axios';
 
 import {
   GridRowModes,
@@ -30,16 +32,16 @@ import {
 
 
 
-const initialRows = [
-  { id: 1, name: 'promotion1',code:'XSDPOa', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 2, name: 'promotion2',code:'XSDPOb', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 3, name: 'promotion3',code:'XSDPOc', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 4, name: 'promotion4',code:'XSDPOd', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 5, name: 'promotion5',code:'XSDPOe', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 6, name: 'promotion6',code:'XSDPOf', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 7, name: 'promotion7',code:'XSDPOg', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-  { id: 8, name: 'promotion8',code:'XSDPOh', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-];
+// const initialRows = [
+//   { id: 1, name: 'promotion1',code:'XSDPOa', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+//   { id: 2, name: 'promotion2',code:'XSDPOb', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+//   { id: 3, name: 'promotion3',code:'XSDPOc', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+//   { id: 4, name: 'promotion4',code:'XSDPOd', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+//   { id: 5, name: 'promotion5',code:'XSDPOe', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+//   { id: 6, name: 'promotion6',code:'XSDPOf', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+//   { id: 7, name: 'promotion7',code:'XSDPOg', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+//   { id: 8, name: 'promotion8',code:'XSDPOh', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+// ];
 
 
 
@@ -103,10 +105,12 @@ function EditToolbar(props) {
 }
 
 export default function GridPromotion() {
-  const [rows, setRows] = React.useState(initialRows);
+  const [data , setData] = React.useState([]);
+  const [rows, setRows] = React.useState([]);
   const [rowModesModel, setRowModesModel] = React.useState({});
   const [page, setPage] = React.useState(1);
-  const pageSize = 7; // Set the number of rows per page here
+  const pageSize = 7; 
+  console.log('mariam')// Set the number of rows per page here
 
   // Calculate the total number of pages based on the page size
   const totalPages = Math.ceil(rows.length / pageSize);
@@ -121,7 +125,33 @@ export default function GridPromotion() {
 
   const visibleRows = rows.slice(startIndex, endIndex);
 
+  React.useEffect(() => {
 
+
+    const response =axios.get('http://localhost:4000/api/promotions/read')
+    setData(response.data)
+
+    
+//     // const fetchData = async () => {
+//       var myHeaders = new Headers();
+// myHeaders.append("Content-Type", "application/json");
+
+
+// var requestOptions = {
+//   method: 'GET',
+//   headers: myHeaders,
+  
+// };
+
+// fetch("localhost:4000/api/promotions/read", requestOptions)
+//   .then(response => response.text())
+//   .then(result => console.log(result))
+//   .catch(error => console.log('error', error));
+    
+  
+    // fetchData();
+  }, []);
+  console.log(data)
 
 
   const handleRowEditStop = (params, event) => {
@@ -211,6 +241,8 @@ export default function GridPromotion() {
             />,
           ];
         }
+       
+        
 
         return [
           <GridActionsCellItem
