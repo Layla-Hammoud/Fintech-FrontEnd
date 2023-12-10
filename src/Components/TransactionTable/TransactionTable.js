@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
+import { sortRowsByDate } from "../../utils/DateSorting";
 import {
   Table,
   TableBody,
@@ -13,16 +14,18 @@ import {
   Select,
 } from "@mui/material";
 import "./TransactionTable.css";
-import useApi from "../../hooks/useApi";
 import { toast } from "react-toastify";
 function TransactionTable({rows}) {
 
+  
   const [activeOption, setActiveOption] = useState("All");
   const [page, setPage] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+  const sortedRows = sortRowsByDate(rows, activeOption);
 
   //handel options for filtring data
   const handelOption = (option) => {
@@ -59,11 +62,11 @@ function TransactionTable({rows}) {
   };
 
   let style1 = {
-    backgroundColor: "#4CD080",
-    borderRadius: 5,
-    p: 0.8,
+    backgroundColor: "#119c59",
+    borderRadius: 1,
+    p: 1,
     color: "white",
-    width: 60,
+    width: 70,
     textAlign: "center",
   };
   let style2 = { borderRadius: 5, p: 0.8, width: 60, textAlign: "center" };
@@ -103,7 +106,7 @@ function TransactionTable({rows}) {
               All
             </Typography>
             <Typography
-              onClick={() => handelOption("Monthly")}
+              onClick={() =>{ handelOption("Monthly");}}
               sx={activeOption === "Monthly" ? style1 : style2}
             >
               Monthly
@@ -151,7 +154,7 @@ function TransactionTable({rows}) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * 4, page * 4 + 4).map((row) => (
+            {sortedRows.slice(page * 4, page * 4 + 4).map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ "&: -child td": { border: 0, background: "red" } }}
@@ -175,7 +178,7 @@ function TransactionTable({rows}) {
       <TablePagination
         rowsPerPageOptions={[4]}
         component="div"
-        count={rows.length}
+        count={sortedRows.length}
         rowsPerPage={4}
         page={page}
         onPageChange={handleChangePage}

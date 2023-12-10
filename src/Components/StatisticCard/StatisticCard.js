@@ -8,10 +8,17 @@ import {
   MenuItem,
 } from "@mui/material";
 import { PieChart } from "@mui/x-charts/PieChart";
-import { useState } from "react";
-const StatisticCard = () => {
-  const [time, setTime] = useState("");
+import { useState} from "react";
 
+
+
+const StatisticCard = ({wallet,transactions}) => {
+  const [time, setTime] = useState("");
+  let expenses=0;
+  transactions.forEach(element => {
+    if(element.type==='withdraw'){expenses=expenses+element.amountReceived}
+  });
+  
   const handleChange = (event) => {
     setTime(event.target.value);
   };
@@ -94,13 +101,13 @@ const StatisticCard = () => {
           <Box>
             <p style={{ color: "#AFAFAF" }}>Income</p>
             <p>
-              <strong>$473</strong>
+              <strong>${wallet.usdBalance}</strong>
             </p>
           </Box>
           <Box>
             <p style={{ color: "#AFAFAF" }}>Expenses</p>{" "}
             <p>
-              <strong>$473</strong>
+              <strong>T{expenses}</strong>
             </p>
           </Box>
           <Box>
@@ -117,13 +124,13 @@ const StatisticCard = () => {
                 data: [
                   {
                     id: 0,
-                    value: 437,
+                    value: `${wallet.usdBalance}`,
                     label: "income",
                     color: customColors[0],
                   },
                   {
                     id: 1,
-                    value: 103,
+                    value:`${expenses}`,
                     label: "expenses",
                     color: customColors[1],
                   },
