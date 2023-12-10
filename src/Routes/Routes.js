@@ -14,6 +14,7 @@ import LoginPage from "../Pages/Login/LoginPage.js"
 import ProtectedRoute from "./ProtectedRoute.js";
 import Merchants from '../Pages/AllMerchants/Merchants.js'
 import MerchantDashboard from "../Pages/MerchantDashboard/MerchantDashboard.js";
+import UserDashboard from '../Pages/UserDashboard/UserDashboard.js'
 const AppRoutes = () => {
   return (
       <Routes>
@@ -23,6 +24,7 @@ const AppRoutes = () => {
         {/* <Route element={<ProtectedRoute allowedRoles={['user']} />}> */}
         <Route path="/wallet" element={<SideBar />}>
           <Route index element={<MerchantDashboard />} />
+          {/* <Route path="UserDashboard" element={<UserDashboard />} /> */}
           <Route path="users" element={<GridUser />} />
           <Route path="history" element={<TransactionTable />} />
           <Route path="transaction" element={<GridPromotion />} />
