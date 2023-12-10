@@ -1,35 +1,74 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Paper, Box, Typography, Button, Input } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
-import img from '../../Assets/Icons/img.png'
-import imag from '../../Assets/Icons/imag.png'
-import image from '../../Assets/Icons/image.png'
-
+import { toast } from "react-toastify";
+import useApi from "../../hooks/useApi";
 const SectionUserDashboard = () => {
-  const [avatars, setAvatars] = useState([{ img, imag, image }]);
-  const [showMoreAvatars, setShowMoreAvatars] = useState(false);
+  const { apiCall } = useApi();
 
-  const handleClick = () => {
-    if (avatars.length < 20) {
-      const newAvatars = [...avatars, img, imag, image];
-      setAvatars(newAvatars);
+
+  // const [transferForm, setTransferForm] = useState(
+  //   {
+  //     amountReceived: 10,
+  //     type: "transfer",
+  //     senderUsername: "suheir",
+  //     receiverUsername: "sam"
+  // })
+
+  // const handelChange = (e) => {
+  //   setTransferForm({
+  //     ...transferForm,
+  //     [e.target.id]: e.target.id === 'amountReceived' ? parseFloat(e.target.value) : e.target.value
+  //   }
+  //   )
+  // }
+
+
+  const [loading, setLoading] = useState(false);
+  const [transferForm, setTransferForm] = useState(
+    {
+      amountReceived: null,
+      type: "transfer",
+      senderUsername: "suheir",
+      receiverUsername: ""
+    });
+
+  const handelChange = (e) => {
+    setTransferForm({
+      ...transferForm,
+      [e.target.id]: e.target.id === 'amountReceived' ? parseFloat(e.target.value) : e.target.value
     }
+    )
+  }
 
-    if (avatars.length >= 12) {
-      setShowMoreAvatars(false);
-    } else {
-      setShowMoreAvatars(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    if (!transferForm.senderUsername || !transferForm.amountReceived) {
+      toast.error("Please insert sender userName or Amount sent");
+      setLoading(false);
+      return;
     }
-  };
+    try {
+      console.log(transferForm)
+      const response = await apiCall({
+        url: "/api/transactions",
+        method: "POST",
+        data: transferForm
+      });
 
-  const handleBackClick = () => {
-    setShowMoreAvatars(false);
-  };
+      console.log(response.message)
+    } catch (error) {
+      console.error("Error during transfer:", error);
+    }
+    setTransferForm({
+      amountReceived:'',
+      type: "transfer",
+      senderUsername: "suheir",
+      receiverUsername: ""
+    });
+  }
 
   return (
     <Paper
@@ -39,15 +78,17 @@ const SectionUserDashboard = () => {
         '@media(minWidth:280px': { width: '90%' },
       }}
     >
-      <Box sx={{ maxWidth: '100', p: '12px',display:'flex' ,flexDirection:'column'}}>
+      <Box sx={{ maxWidth: '100', p: '12px', display: 'flex', flexDirection: 'column' }}>
         <Typography sx={{ paddingTop: '1rem', fontWeight: 'bold', fontSize: '22px' }}>
           Quick Transfer
         </Typography>
 
         <TextField
-          id="outlined-basic"
-          label="UserName"
+          id="receiverUsername"
+          label="Receiver userName"
           variant="outlined"
+          value={transferForm.receiverUsername}
+          onChange={handelChange}
           sx={{
             width: '100%', maxWidth: '497px', marginTop: '1rem', '@media(minWidth:280px)': { maxWidth: '50px' },
             "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
@@ -57,14 +98,16 @@ const SectionUserDashboard = () => {
             "& .MuiInputLabel-root.Mui-focused": {
               color: "#119c59",
             },
-            
+
           }}
         />
 
         <TextField
-          id="outlined-basic"
+          id="amountReceived"
           label="Amount"
           variant="outlined"
+          onChange={handelChange}
+          value={transferForm.amountReceived}
           sx={{
             width: '100%', maxWidth: '497px', marginTop: '1rem',
             "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
@@ -81,7 +124,7 @@ const SectionUserDashboard = () => {
 
         <Button
           //add button to add transfer
-          // onClick={}
+          onClick={handleSubmit}
           variant="contained"
           disableElevation
           sx={{
