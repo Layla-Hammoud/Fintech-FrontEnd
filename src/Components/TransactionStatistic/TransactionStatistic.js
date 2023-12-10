@@ -8,21 +8,53 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { LineChart } from '@mui/x-charts/LineChart';
-const TransactionStatistic = () => {
-  const [time, setTime] = useState("");
+const TransactionStatistic = ({transactions}) => {
 
-  const handleChange = (event) => {
-    setTime(event.target.value);
+  const calculateMonthlySum = () => {
+    const today = new Date();
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(today.getMonth() - 5); // Subtract 5 to get the last 6 months
+    
+    const monthlySum = new Array(6).fill(0); // Initialize an array to store sum for each of the last 6 months
+    
+    transactions.forEach(transaction => {
+      const transactionDate = new Date(transaction.createdAt);
+      const monthDifference = today.getMonth() - transactionDate.getMonth();
+      const yearDifference = today.getFullYear() - transactionDate.getFullYear();
+    
+      // Check if the transaction is 'completed' and falls within the last 6 months
+      if (
+        transaction.status === 'completed' &&
+        yearDifference === 0 &&
+        monthDifference >= 0 &&
+        monthDifference < 6
+      ) {
+        const monthIndex = 5 - monthDifference; // Calculate the index for the month within the last 6 months
+        monthlySum[monthIndex] += transaction.amountReceived;
+      }
+    });
+    
+    return monthlySum;
   };
-  const uData = [4000, 3000, 2000, 2780, 1890, 3490];
-const xLabels = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-];
+  
+  const handleChange = (event) => {
+    
+  };
+  const generateMonthLabels = () => {
+    const monthLabels = [];
+    const today = new Date();
+    for (let i = 5; i >= 0; i--) {
+      const date = new Date();
+      date.setMonth(today.getMonth() - i);
+      const monthName = date.toLocaleString('default', { month: 'short' });
+      monthLabels.push(monthName);
+    }
+    return monthLabels;
+  };
+
+  const uData = calculateMonthlySum();
+  const xLabels = generateMonthLabels();
+  console.log(uData, xLabels);
 
   return (
     <>
@@ -30,7 +62,7 @@ const xLabels = [
         variant="outlined"
         sx={{
           borderColor: "#E6E9EE",
-          width: "75%",
+          width: "100%",
           height: "424px",
           display: "flex",
           flexDirection: "column",
@@ -62,7 +94,7 @@ const xLabels = [
           }}
         >
           <p style={{fontSize:"1.5em"}}><strong>Total Transaction</strong></p>
-          <FormControl
+          {/* <FormControl
             sx={{
               m: 1,
               minWidth: 120,
@@ -88,11 +120,11 @@ const xLabels = [
               <MenuItem value={"monthly"}>monthly</MenuItem>
               <MenuItem value={"yearly"}>yearly</MenuItem>
             </Select>
-          </FormControl>
-        </Box>
+          </FormControl>*/}
+        </Box> 
         <div style={{width:"100%"}}>
         <LineChart
-      height={300}
+      height={400}
        
       series={[{ data: uData, area: true, showMark: false }]}
       xAxis={[{ scaleType: 'point', data: xLabels }]}

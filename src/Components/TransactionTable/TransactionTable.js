@@ -15,9 +15,7 @@ import {
 import "./TransactionTable.css";
 import useApi from "../../hooks/useApi";
 import { toast } from "react-toastify";
-function TransactionTable() {
-  const [rows, setRows] = useState([]);
-  const { apiCall } = useApi();
+function TransactionTable({rows}) {
 
   const [activeOption, setActiveOption] = useState("All");
   const [page, setPage] = useState(0);
@@ -25,22 +23,6 @@ function TransactionTable() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
-  useEffect(() => {
-    const fetchTransaction = async () => {
-        try {
-          const response = await apiCall({
-            url: `/api/transactions/transactionForMerchant/2`, // Pass the page parameter to the backend
-            method: "get",
-          });
-          console.log(response)
-          setRows(response.data);
-        } catch (error) {
-          toast.error(error.response)
-        }
-      };
-    fetchTransaction();
-}, []); 
 
   //handel options for filtring data
   const handelOption = (option) => {

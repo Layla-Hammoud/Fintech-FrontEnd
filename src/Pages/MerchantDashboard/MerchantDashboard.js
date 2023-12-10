@@ -3,11 +3,15 @@ import { Box } from "@mui/material";
 import TransactionStatistic from '../../Components/TransactionStatistic/TransactionStatistic'
 import LoyalUserCard from "../../Components/LoyalUserCard/LoyalUserCard";
 import TransactionTable from '../../Components/TransactionTable/TransactionTable'
+import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import useApi from "../../hooks/useApi";
 const MerchantDashboard = () => {
   const { apiCall } = useApi();
   const [wallet,setWallet] = useState({})
+  const [rows, setRows] = useState([]);
+  const uniqueSenders = new Set(rows.map(row => row.senderId));
+  const uniqueSenderCount = uniqueSenders.size;
   useEffect(() => {
     const fetchWallet = async () => {
       try {
@@ -21,19 +25,21 @@ const MerchantDashboard = () => {
       }
     };
 
-    const fetchTransaction = async () => {
-      try {
-        const response = await apiCall({
-          url: "/api/wallet/view/2",
-          method: "get",
-        });
-        setWallet(response.data)
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-  
+   
+      const fetchTransaction = async () => {
+          try {
+            const response = await apiCall({
+              url: `/api/transactions/transactionForMerchant/2`, // Pass the page parameter to the backend
+              method: "get",
+            });
+            console.log(response)
+            setRows(response.data);
+          } catch (error) {
+            toast.error(error.response)
+          }
+        };
+      fetchTransaction();
+    fetchTransaction()
     fetchWallet();
   }, []);
   return (
@@ -53,10 +59,10 @@ const MerchantDashboard = () => {
         },
         
       }}>
-        <CardBalance title={"USD Balance"} amount={wallet.usdBalance} backGroundColor={"white"} borderColor={"#0F5533"}/>
-        <CardBalance title={"USDT Balance"} amount={wallet.usdtBalance} backGroundColor={"white"} borderColor={"#2DD683"}/>
-        <CardBalance title={"Income"} amount={'$120.499'} backGroundColor={"white"} borderColor={"#FA8B3A"}/>
-        <CardBalance title={"Interacted Users"} amount={'$120.499'} backGroundColor={"white"} borderColor={"#AFAFAF"}/>
+        <CardBalance title={"USD Balance"} amount={wallet.usdBalance} unit={"$"} backGroundColor={"white"} borderColor={"#0F5533"}/>
+        <CardBalance title={"USDT Balance"} amount={wallet.usdtBalance} unit={"T"} backGroundColor={"white"} borderColor={"#2DD683"}/>
+        <CardBalance title={"Income"} amount={wallet.usdBalance} unit={"T"} backGroundColor={"white"} borderColor={"#FA8B3A"}/>
+        <CardBalance title={"Interacted Users"} amount={uniqueSenderCount} backGroundColor={"white"} borderColor={"#AFAFAF"}/>
       </Box>
       <Box sx={{
         display:"flex",
@@ -68,10 +74,9 @@ const MerchantDashboard = () => {
           justifyContent:"center"
         },
       }}>
-      <TransactionStatistic/>
-      <LoyalUserCard />
+      <TransactionStatistic transactions={rows}/>
       </Box>
-      <TransactionTable/>
+      <TransactionTable rows={rows}/>
       </Box>
     </>
   );
