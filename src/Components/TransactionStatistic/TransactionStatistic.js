@@ -63,7 +63,7 @@ const TransactionStatistic = ({transactions}) => {
         sx={{
           borderColor: "#E6E9EE",
           width: "100%",
-          height: "424px",
+          height: "500px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
