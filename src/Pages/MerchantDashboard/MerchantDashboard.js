@@ -8,8 +8,6 @@ import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import useApi from "../../hooks/useApi";
 const MerchantDashboard = () => {
-  const { user, checkUser } = useContext(AuthContext);
-  const { fetchUserData } = useContext(AuthContext);
   const { apiCall } = useApi();
   const [wallet, setWallet] = useState({});
   const [rows, setRows] = useState([]);

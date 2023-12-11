@@ -36,6 +36,7 @@ import { AuthContext } from "../../Context/AuthContext";
 const drawerWidth = 240;
 const icons = [<Person />, <SwapVert />, <MoveDown />, <PublishedWithChanges />, <Settings />];
 const userIcons =[<DashboardIcon/>,<PaidIcon />,<DiscountIcon/>]
+const merchentIcons =[<DashboardIcon/>,<SwapVert />,<DiscountIcon/>]
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
@@ -118,32 +119,32 @@ export default function SideBar() {
   };
   const sidebarItems = {
     admin: [
-      'wallet/users',
-      'wallet/buy-usdt',
+      ['wallet/AdminDashoard','Dashboard'],
+      ['wallet/buy-usdt','Buy USDT'],
       'Deposit',
       'Activity',
       'Promotions',
       'Settings'
     ],
     merchant: [
-      'wallet/transactions',
-      'wallet/balance',
-      'Deposit',
-      'Activity',
-      'Promotions',
-      'Settings'
+      ['wallet/MerchantDashboard','My Dashboard'],
+      ['wallet/transaction-table','My Transactions'],
+      ['wallet/promotion-table','My Promotions'],
     ],
     user: [
-      'wallet/UserDashboard',
-      'wallet/buy-usdt',
-      'wallet/promotions',
+      ['wallet/UserDashboard','My Dashboard'],
+      ['wallet/buy-usdt','Buy USDT'],
+      ['wallet/promotions','Promotions'],
     ]
   };
 
-  const filteredSidebarItems = sidebarItems[user.role] || [];
+  const filteredSidebarItems = sidebarItems[user?.role] || [];
   let filteredIcon;
-  if(user.role==='user'){
+  if(user && user.role==='user'){
     filteredIcon = userIcons
+  }
+  else if(user && user.role==='merchant'){
+    filteredIcon= merchentIcons
   }
   return (
     <>
@@ -232,14 +233,14 @@ export default function SideBar() {
           <List>
 
             {filteredSidebarItems.map((text, index) => (
-              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+              <ListItem key={text[0]} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
                     className={({ isActive, isPending }) =>
                     isPending ? "pending" : isActive ? "active" : ""
                   }
 
                   component={NavLink}
-                  to={`/${text}`}
+                  to={`/${text[0]}`}
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? 'initial' : 'center',
@@ -261,7 +262,7 @@ export default function SideBar() {
                   >
                     {filteredIcon[index]}
                   </ListItemIcon>
-                  <ListItemText primary={text.split('/')[1]} sx={{ opacity: open ? 1 : 0 }} />
+                  <ListItemText primary={text[1]} sx={{ opacity: open ? 1 : 0 }} />
                 </ListItemButton>
               </ListItem>
             ))}
