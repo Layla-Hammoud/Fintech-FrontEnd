@@ -52,7 +52,7 @@ const handlelogOut = async () =>{
           color="text.secondary"
           variant="body2"
         >
-          USREName
+          {user?.userName}
         </Typography>
       </Box>
       <Divider />
@@ -66,7 +66,9 @@ const handlelogOut = async () =>{
           }
         }}
       >
-        <MenuItem onClick={handlelogOut}>
+        <MenuItem sx={{
+          color:"red",
+        }} onClick={handlelogOut}>
           Sign out
         </MenuItem>
       </MenuList>
