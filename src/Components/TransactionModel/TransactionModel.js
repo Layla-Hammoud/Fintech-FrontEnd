@@ -3,19 +3,18 @@ import { useState,useContext } from "react";
 import { AuthContext } from '../../Context/AuthContext';
 import useApi from "../../hooks/useApi";
 import { toast } from "react-toastify";
-const TransactionModel = ({ merchant, setOpen, open }) => {
+const TransactionModel = ({ merchant, setOpen, open, code = 'unavailable' }) => {
   const {user,checkUser} = useContext(AuthContext)
   const { apiCall } = useApi();
   const handleClose = () => setOpen(false);
   const [formData, setFormData] = useState({
     amountSent: null,
     type:'transaction',
-    code: "unavailable",
-    senderUsername:"",
-    receiverUsername:''
+    code: code,
+    senderUsername:user && user.userName,
+    receiverUsername:merchant && merchant.userName
 
   });
-
   const handelChange = (e) => {
     setFormData({
       ...formData,

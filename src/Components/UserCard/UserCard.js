@@ -20,7 +20,7 @@ const UserCard = ({ merchant }) => {
           alignItems: "start",
           borderRadius: "20px",
           "& img": { marginTop: "1.5rem" },
-          "@media (min-width: 280px)": {
+          "@media (min-width: 250px)": {
             padding: "1.5em 2em",
           },
         }}

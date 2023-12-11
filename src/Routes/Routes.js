@@ -26,7 +26,7 @@ const AppRoutes = () => {
           <Route path="MerchantDashboard" element={<MerchantDashboard />} />
           <Route path="UserDashboard" element={<UserDashboard />} />
           <Route path="buy-usdt" element={<Merchants />}></Route>
-          <Route path="promotions" element={<Merchants />}></Route>
+          <Route path="promotions" element={<PromotionPage />}></Route>
           <Route path="promotion-table" element={<GridPromotion />}></Route>
           <Route path="transaction-table" element={<TransactionTable />}></Route>
           <Route path="users" element={<GridUser />} />

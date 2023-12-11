@@ -203,7 +203,7 @@ export default function SideBar() {
         <Drawer variant="permanent" open={open} sx={{
 
           ...(!open && {
-            '@media(width<500px)': {
+            '@media(width<1400px)': {
               display: 'none'
             }
           })
