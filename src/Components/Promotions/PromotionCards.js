@@ -1,37 +1,58 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import OneCardPromotion from "./OneCardPromotion.js";
 import Container from "@mui/material/Container";
 import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material";
+import axios from "axios";
 
-const PromotionCards = () => {
-  const fakeData = [
-    {
-      name: "Basic Plan",
-      amount: 29.99,
-      detail: "hello how are you tody",
-      startDate: "20/3/2027",
-    },
-    {
-      name: "sultan Plan",
-      amount: 29.99,
-      detail: "hello how are you tody",
-      startDate: "20/3/2025",
-    },
-    {
-      name: "maria Plan",
-      amount: 29.99,
-      detail: "hello how are you tody",
-      startDate: "20/3/2022",
-    },
-    {
-      name: "FtimaPlan",
-      amount: 29.99,
-      detail: "hello how are you tody",
-      startDate: "20/3/2022",
-    },
-  ];
+
+  // const fakeData = [
+  //   {
+  //     name: "Basic Plan",
+  //     amount: 29.99,
+  //     detail: "hello how are you tody",
+  //     startDate: "20-3-2027",
+  //   },
+  //   {
+  //     name: "sultan Plan",
+  //     amount: 29.99,
+  //     detail: "hello how are you tody",
+  //     startDate: "20-3-2025",
+  //   },
+  //   {
+  //     name: "maria Plan",
+  //     amount: 29.99,
+  //     detail: "hello how are you tody",
+  //     startDate: "20-3-2022",
+  //   },
+  //   {
+  //     name: "FtimaPlan",
+  //     amount: 29.99,
+  //     detail: "hello how are you tody",
+  //     startDate: "20-3-2022",
+  //   },
+  // ];
+
+  const api  = axios.create({
+    baseURL: "http://localhost:3000",
+  });
+  const PromotionCards = () => {
+    const [promotions, setPromotions] = useState([]);
+    useEffect(() => {
+      const fetchPromotions = async () => {
+        try{
+          const response = await api.get("/promotions/read");
+          setPromotions(response.data.promotions);
+          
+        }catch(error){
+          console.log("Error while fetching the promotions", error);
+          
+        }
+      };
+      fetchPromotions();
+    },[]);
   const theme = createTheme({
     components: {
       MuiTypography: {
@@ -57,6 +78,8 @@ const PromotionCards = () => {
       },
     },
   });
+    
+    
 
   return (
     <ThemeProvider theme={theme}>
@@ -82,7 +105,7 @@ const PromotionCards = () => {
             spacing={{ xs: 2, md: 3 }}
             columns={{ xs: 4, sm: 8, md: 12 }}
           >
-            {fakeData.map((data, key) => (
+            {promotions.map((data, key) => (
               <Grid item xs={12} sm={6} md={4} key={key}>
                 <OneCardPromotion
                   name={data.name}
