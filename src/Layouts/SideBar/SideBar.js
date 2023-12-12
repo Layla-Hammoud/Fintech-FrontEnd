@@ -22,16 +22,21 @@ import Sell from '@mui/icons-material/Sell';
 import Settings from '@mui/icons-material/Settings';
 import SwapVert from '@mui/icons-material/SwapVert';
 import PublishedWithChanges from '@mui/icons-material/PublishedWithChanges'
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import DiscountIcon from '@mui/icons-material/Discount';
+import PaidIcon from '@mui/icons-material/Paid';
 import { Avatar } from '@mui/material'
 import Notifications from '../../Components/TopSide/Notifications';
 import { AccountPopover } from '../../Components/TopSide/AccountPopover';
 import { usePopover } from '../../Components/TopSide/usePopover';
 import { Outlet, NavLink } from 'react-router-dom';
+import { useContext } from 'react';
 import './SideBar.css'
-
-
+import { AuthContext } from "../../Context/AuthContext";
 const drawerWidth = 240;
-const icons = [<Person />, <SwapVert />, <MoveDown />, <PublishedWithChanges />, <Sell />, <Settings />];
+const icons = [<Person />, <SwapVert />, <MoveDown />, <PublishedWithChanges />, <Settings />];
+const userIcons =[<DashboardIcon/>,<PaidIcon />,<DiscountIcon/>]
+const merchentIcons =[<DashboardIcon/>,<SwapVert />,<DiscountIcon/>]
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
@@ -99,6 +104,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function SideBar() {
+  const {user,checkUser} = useContext(AuthContext)
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const accountPopover = usePopover();
@@ -111,7 +117,35 @@ export default function SideBar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const sidebarItems = {
+    admin: [
+      ['wallet/AdminDashoard','Dashboard'],
+      ['wallet/buy-usdt','Buy USDT'],
+      'Deposit',
+      'Activity',
+      'Promotions',
+      'Settings'
+    ],
+    merchant: [
+      ['wallet/MerchantDashboard','My Dashboard'],
+      ['wallet/transaction-table','My Transactions'],
+      ['wallet/promotion-table','My Promotions'],
+    ],
+    user: [
+      ['wallet/UserDashboard','My Dashboard'],
+      ['wallet/buy-usdt','Buy USDT'],
+      ['wallet/promotions','Promotions'],
+    ]
+  };
 
+  const filteredSidebarItems = sidebarItems[user?.role] || [];
+  let filteredIcon;
+  if(user && user.role==='user'){
+    filteredIcon = userIcons
+  }
+  else if(user && user.role==='merchant'){
+    filteredIcon= merchentIcons
+  }
   return (
     <>
       <Box>
@@ -169,7 +203,7 @@ export default function SideBar() {
         <Drawer variant="permanent" open={open} sx={{
 
           ...(!open && {
-            '@media(width<500px)': {
+            '@media(width<1400px)': {
               display: 'none'
             }
           })
@@ -198,15 +232,15 @@ export default function SideBar() {
           <Divider />
           <List>
 
-            {['Users', 'Transaction', 'Deposit', 'Activity', 'Promotions', 'Settings'].map((text, index) => (
-              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+            {filteredSidebarItems.map((text, index) => (
+              <ListItem key={text[0]} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
                     className={({ isActive, isPending }) =>
                     isPending ? "pending" : isActive ? "active" : ""
                   }
 
                   component={NavLink}
-                  to={`/${text}`}
+                  to={`/${text[0]}`}
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? 'initial' : 'center',
@@ -226,9 +260,9 @@ export default function SideBar() {
                       color: '#00000'
                     }}
                   >
-                    {icons[index]}
+                    {filteredIcon[index]}
                   </ListItemIcon>
-                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                  <ListItemText primary={text[1]} sx={{ opacity: open ? 1 : 0 }} />
                 </ListItemButton>
               </ListItem>
             ))}

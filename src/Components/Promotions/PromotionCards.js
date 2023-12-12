@@ -5,33 +5,7 @@ import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material";
 
-const PromotionCards = () => {
-  const fakeData = [
-    {
-      name: "Basic Plan",
-      amount: 29.99,
-      detail: "hello how are you tody",
-      startDate: "20/3/2027",
-    },
-    {
-      name: "sultan Plan",
-      amount: 29.99,
-      detail: "hello how are you tody",
-      startDate: "20/3/2025",
-    },
-    {
-      name: "maria Plan",
-      amount: 29.99,
-      detail: "hello how are you tody",
-      startDate: "20/3/2022",
-    },
-    {
-      name: "FtimaPlan",
-      amount: 29.99,
-      detail: "hello how are you tody",
-      startDate: "20/3/2022",
-    },
-  ];
+const PromotionCards = ({promotions}) => {
   const theme = createTheme({
     components: {
       MuiTypography: {
@@ -49,7 +23,7 @@ const PromotionCards = () => {
               variant: "subtitle1",
             },
             style: {
-              fontSize: 20,
+              fontSize: 30,
               fontWeight: "bold",
             },
           },
@@ -84,13 +58,16 @@ const PromotionCards = () => {
             spacing={{ xs: 2, md: 3 }}
             columns={{ xs: 4, sm: 8, md: 12 }}
           >
-            {fakeData.map((data, key) => (
+            {promotions.map((data, key) => (
               <Grid item xs={12} sm={6} md={4} key={key}>
                 <OneCardPromotion
                   name={data.name}
                   amount={data.amount}
                   detail={data.detail}
-                  startDate={data.startDate}
+                  startDate={new Date(data.startDate).toISOString().split('T')[0]}
+                  endDate={new Date(data.endDate).toISOString().split('T')[0]}
+                  merchant={data.merchant}
+                  code={data.code}
                 />
               </Grid>
             ))}

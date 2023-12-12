@@ -1,25 +1,58 @@
 import { Typography, TextField, Box, Button, Modal } from "@mui/material";
-import { useState } from "react";
-const TransactionModel = ({ name, setOpen, open }) => {
+import { useState,useContext } from "react";
+import { AuthContext } from '../../Context/AuthContext';
+import useApi from "../../hooks/useApi";
+import { toast } from "react-toastify";
+const TransactionModel = ({ merchant, setOpen, open, code = 'unavailable' }) => {
+  const {user,checkUser} = useContext(AuthContext)
+  const { apiCall } = useApi();
   const handleClose = () => setOpen(false);
   const [formData, setFormData] = useState({
-    amount: "",
-    code: "",
-  });
+    amountSent: null,
+    type:'transaction',
+    code: code,
+    senderUsername:user && user.userName,
+    receiverUsername:merchant && merchant.userName
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  });
+  const handelChange = (e) => {
     setFormData({
       ...formData,
-      [name]: value,
-    });
-  };
-  const handleSubmit = (e) => {
+      [e.target.id]: e.target.id === 'amountSent' ? parseFloat(e.target.value) : e.target.value
+    }
+    )
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData); 
+    console.log(formData)
+    // if(formData.code === "")delete formData.code
+    try {
+      const response = await apiCall({
+        url: "/api/transactions",
+        method: "post",
+        data: {
+          amountSent: formData.amountSent,
+          code: formData.code,
+          senderUsername: user.userName,
+          type: 'transaction',
+          receiverUsername: merchant.userName
+        },
+      });
+      toast.success(response.message);
+      // If the API call is successful, continue with the rest of your logic or handle success cases here
+    } catch (error) {
+      const errors  = error.response.data;
+          toast.error(errors);
+        
+    }
     setFormData({
-        amount: '',
-        code: '',
+      amountSent: null,
+      type:'transaction',
+      code: "unavailable",
+      senderUsername:user.userName,
+      receiverUsername:''
+  
       });
 
   };
@@ -51,16 +84,17 @@ const TransactionModel = ({ name, setOpen, open }) => {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             form{" "}
             <span>
-              <strong style={{ color: "green" }}>{name}</strong>
+              <strong style={{ color: "green" }}>{merchant.userName}</strong>
             </span>
           </Typography>
           <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
-            label="amount"
-            name="amount"
+            label="amountSent"
+            name="amountSent"
+            id='amountSent'
             value={formData.amount}
-            onChange={handleInputChange}
+            onChange={handelChange}
             type="number"
             required
             sx={{
@@ -79,7 +113,7 @@ const TransactionModel = ({ name, setOpen, open }) => {
             label="code"
             name="code"
             value={formData.code}
-            onChange={handleInputChange}
+            onChange={handelChange}
             type="text"
             sx={{
               marginTop: "20px",

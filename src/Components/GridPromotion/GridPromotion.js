@@ -1,5 +1,4 @@
-import { FetchData } from '../../fetch/fetchData';
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
@@ -9,8 +8,8 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import './GridPromotion.css'
 import merchantImg from '../../Assets/Images/maker-mkr-logo.png'
-import axios from 'axios';
-
+import useApi from '../../hooks/useApi';
+import PromotionModal from './PromotionModal';
 import {
   GridRowModes,
   DataGrid,
@@ -20,7 +19,7 @@ import {
   GridToolbarFilterButton,
 
 } from '@mui/x-data-grid';
-import { FormControl, InputLabel, MenuItem, Select, Stack, Pagination } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Select, Stack, Pagination, Avatar } from '@mui/material'
 
 
 import {
@@ -33,33 +32,21 @@ import {
 
 
 // const initialRows = [
-//   { id: 1, name: 'promotion1',code:'XSDPOa', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-//   { id: 2, name: 'promotion2',code:'XSDPOb', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-//   { id: 3, name: 'promotion3',code:'XSDPOc', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-//   { id: 4, name: 'promotion4',code:'XSDPOd', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-//   { id: 5, name: 'promotion5',code:'XSDPOe', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-//   { id: 6, name: 'promotion6',code:'XSDPOf', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-//   { id: 7, name: 'promotion7',code:'XSDPOg', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
-//   { id: 8, name: 'promotion8',code:'XSDPOh', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024',merchant:{id:1,userName:'activeT',image:merchantImg} },
+//   { id: 1, name: 'promotion1', code: 'XSDPOa', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024', merchant: { id: 1, userName: 'activeT', image: merchantImg } },
+//   { id: 2, name: 'promotion2', code: 'XSDPOb', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024', merchant: { id: 1, userName: 'activeT', image: merchantImg } },
+//   { id: 3, name: 'promotion3', code: 'XSDPOc', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024', merchant: { id: 1, userName: 'activeT', image: merchantImg } },
+//   { id: 4, name: 'promotion4', code: 'XSDPOd', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024', merchant: { id: 1, userName: 'activeT', image: merchantImg } },
+//   { id: 5, name: 'promotion5', code: 'XSDPOe', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024', merchant: { id: 1, userName: 'activeT', image: merchantImg } },
+//   { id: 6, name: 'promotion6', code: 'XSDPOf', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024', merchant: { id: 1, userName: 'activeT', image: merchantImg } },
+//   { id: 7, name: 'promotion7', code: 'XSDPOg', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024', merchant: { id: 1, userName: 'activeT', image: merchantImg } },
+//   { id: 8, name: 'promotion8', code: 'XSDPOh', detail: 'Benefit now from a promotion over 20%', amount: 20, startDate: '10-12-2023', endDate: '10-1-2024', merchant: { id: 1, userName: 'activeT', image: merchantImg } },
 // ];
 
 
 
 function EditToolbar(props) {
-  const { setRows, setRowModesModel } = props;
+  const { handleOpenModal } = props;
   const [sorting, setSorting] = React.useState('');
-
-  const handleClick = () => {
-    const id = randomId();
-    setRows((oldRows) => [{ id,name: '',code:'', detail: '', amount: null,merchant:{image:merchantImg,userName:''}, isNew: true }, ...oldRows]);
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-    }));
-    console.log(id)
-
-
-  };
 
   return (
     <GridToolbarContainer sx={{
@@ -72,7 +59,7 @@ function EditToolbar(props) {
       },
     }}
     >
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick} sx={{ height: '40px', color: 'black' }}>
+      <Button color="primary" startIcon={<AddIcon />} onClick={handleOpenModal} sx={{ height: '40px', color: 'black' }}>
         Add promotion
       </Button>
 
@@ -105,71 +92,98 @@ function EditToolbar(props) {
 }
 
 export default function GridPromotion() {
-  const [data , setData] = React.useState([]);
-  const [rows, setRows] = React.useState([]);
-  const [rowModesModel, setRowModesModel] = React.useState({});
-  const [page, setPage] = React.useState(1);
-  const pageSize = 7; 
-  console.log('mariam')// Set the number of rows per page here
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [rowModesModel, setRowModesModel] = useState({});
+  const [page, setPage] = useState(1);
+  const [openModal, setOpenModal] = React.useState(false);
+  const [editedData, setEditedData] = useState({});
+  const pageSize = 7; // number of rows per page 
+  const { apiCall } = useApi();
 
-  // Calculate the total number of pages based on the page size
+
+
+  // total number of pages based on the page size
   const totalPages = Math.ceil(rows.length / pageSize);
 
-  const handlePageChange = (event, value) => {
-    setPage(value);
-  };
-
-  // Calculate the start and end indices for the current page
+  // the start and end indices for the current page
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize;
 
   const visibleRows = rows.slice(startIndex, endIndex);
 
-  React.useEffect(() => {
 
 
-    const response =axios.get('http://localhost:4000/api/promotions/read')
-    setData(response.data)
 
-    
-//     // const fetchData = async () => {
-//       var myHeaders = new Headers();
-// myHeaders.append("Content-Type", "application/json");
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
 
 
-// var requestOptions = {
-//   method: 'GET',
-//   headers: myHeaders,
-  
-// };
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
 
-// fetch("localhost:4000/api/promotions/read", requestOptions)
-//   .then(response => response.text())
-//   .then(result => console.log(result))
-//   .catch(error => console.log('error', error));
-    
-  
-    // fetchData();
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+  useEffect(() => {
+    const fetchPromotions = async () => {
+      try {
+        const response = await apiCall({
+          url: "/api/promotions/read/9",
+          method: "get",
+        });
+        console.log(response);
+        setRows(response.Promotions)
+
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false)
+      }
+
+    };
+    fetchPromotions();
+
   }, []);
-  console.log(data)
 
 
-  const handleRowEditStop = (params, event) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
+
+
+
+  const handleSaveClick = (id,params) => async() => {
+    try {
+      // setEditedData({
+      //   ...editedData,
+      //   [params.id]: params.data,
+      // });
+      const updatedData = UpdatedData(id);
+      console.log("Updated Data:", updatedData);
+  
+      await apiCall({
+        url: `/api/promotions/update`,
+        method: "put",
+        data: { id, ...updatedData },
+      });
+      
+      setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    } catch (error) {
+      console.error("Error saving data:", error);
     }
   };
 
-  const handleEditClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-  };
-
-  const handleSaveClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-  };
-
-  const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
+  const handleDeleteClick = (id) => async() => {
+    try {
+      await apiCall({
+        url: `/api/promotions/delete`,
+        method: "delete",
+        data:{id}
+      });
+      setRows(rows.filter((row) => row.id !== id));
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
   };
 
   const handleCancelClick = (id) => () => {
@@ -194,29 +208,70 @@ export default function GridPromotion() {
     setRowModesModel(newRowModesModel);
   };
 
+  //function to update row values
+  const UpdatedData = (id) => {
+    console.log('editedd',editedData)
+    const updatedRow = { ...rows.find((row) => row.id === id), ...editedData[id] };
+    console.log('updated',updatedRow)
+    return {
+      name: updatedRow.name,
+      code: updatedRow.code,
+      detail: updatedRow.detail,
+      amount: updatedRow.amount,
+      startDate: updatedRow.startDate,
+      endDate: updatedRow.endDate,
+    };
+  };
+
+
+
+  const handleRowEditStop = (params, event) => {
+    console.log(params);
+     setEditedData({
+        ...editedData,
+        [params.id]: params.data,
+      });
+    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+     
+    }
+  };
+
+  const handleEditClick = (id,params) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  };
+
   const columns = [
-    {
-      field: 'merchant',
-      headerName: 'Promotion Owner',
-      width: 250,
-      editable: true,
-      renderCell: (params) => (
-        <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
-          <img
-            src={params.row.merchant.image}
-            alt={`${params.row.merchant.userName}`}
-            style={{ width: 35, height: 35, marginRight: 10 }}
-          />
-          {params.row.merchant.userName}
-        </div>
-      ),
-    },
-    { field: 'name', headerName: 'Name', width: 225, editable: true },
+    // {
+    //   field: 'merchant',
+    //   headerName: 'Promotion Owner',
+    //   width: 250,
+    //   editable: true,
+    //   renderCell: (params) => (
+    //     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    //       <Avatar style={{ width: 35, height: 35, marginRight: 10 }}>
+    //         {params.row.merchant.userName.charAt(0)}
+
+    //       </Avatar>
+    //       {params.row.merchant.userName}
+    //     </div>
+    //   ),
+    // },
+    { field: 'name', headerName: 'Promotion Name', width: 225, editable: true },
     { field: 'code', headerName: 'Code', width: 200, editable: true },
     { field: 'detail', headerName: 'Description', width: 400, align: 'left', headerAlign: 'left', editable: true, },
     { field: 'amount', headerName: 'Discount %', headerAlign: 'left', type: 'number', align: 'left', width: 150, editable: true, },
-    { field: 'startDate', headerAlign: 'left', type: 'Date', headerName: 'Start Date', width: 200, editable: true },
-    { field: 'endDate', headerAlign: 'left', headerName: 'End Date', type: 'Date', width: 200, editable: true, },
+    {
+      field: 'startDate', headerAlign: 'left', type: 'Date', headerName: 'Start Date', width: 200, editable: true, renderCell: (params) => (
+        <div>
+          {new Date(params.row.startDate).toISOString().split('T')[0]}
+        </div>)
+    },
+    {
+      field: 'endDate', headerAlign: 'left', headerName: 'End Date', type: 'Date', width: 200, editable: true, renderCell: (params) => (
+        <div>
+          {new Date(params.row.endDate).toISOString().split('T')[0]}
+        </div>)
+    },
     {
       field: 'actions', headerAlign: 'left', align: 'left', type: 'actions', headerName: 'Actions', width: 100, cellClassName: 'actions',
       getActions: ({ id }) => {
@@ -241,8 +296,6 @@ export default function GridPromotion() {
             />,
           ];
         }
-       
-        
 
         return [
           <GridActionsCellItem
@@ -264,67 +317,72 @@ export default function GridPromotion() {
   ];
 
   return (
-    <Box
-      sx={{
-        display: 'block',
-        height: 650,
-        width: '90% ',
-        '& .actions': {
-          color: 'text.secondary',
-        },
-        '& .textPrimary': {
-          color: 'text.primary',
-        },
-        marginLeft: '130px',
-        marginTop: '120px',
-        '@media(width<500px)': {
-          marginLeft: 'auto',
-          marginRight: 'auto'
 
-        },
-        '& .MuiDataGrid-cell': {
-          border: 'none',
-          backgroundColor: '#FAFAFA',
-          marginTop: 1,
-        },
-        '& .MuiDataGrid-columnHeader': {
-          backgroundColor: '#119C59',
-          color: 'white',
-          fontWeight: 'Bold',
-        }
-      }}
+    (loading) ? <div>loading.....</div>
+      : <Box
+        sx={{
+          display: 'block',
+          height: 650,
+          width: '77% ',
+          '& .actions': {
+            color: 'text.secondary',
+          },
+          '& .textPrimary': {
+            color: 'text.primary',
+          },
+          marginLeft: '150px',
+          marginTop: '120px',
+          '@media(width<1000px)': {
+            marginLeft: 'auto',
+            marginRight: 'auto'
 
-    >
-
-      <DataGrid
-        className='grid'
-        disableRowSelectionOnClick
-        rows={visibleRows}
-        columns={columns}
-        editMode="row"
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
-        pagination
-        pageSize={pageSize}
-        rowsPerPageOptions={[pageSize]}
-        rowCount={rows.length}
-        page={page}
-        onPageChange={handlePageChange}
-        sx={{ border: 'none' }}
-        slots={{
-          toolbar: EditToolbar,
-        }}
-        slotProps={{
-          toolbar: { setRows, setRowModesModel },
+          },
+          '& .MuiDataGrid-cell': {
+            border: 'none',
+            backgroundColor: '#FAFAFA',
+            marginTop: 1,
+          },
+          '& .MuiDataGrid-columnHeader': {
+            backgroundColor: '#119C59',
+            color: 'white',
+            fontWeight: 'Bold',
+          }
         }}
 
-      />
+      >
 
-      <Stack spacing={2} direction="row" justifyContent="flex-end" mt={2}>
-        <Pagination count={totalPages} page={page} onChange={handlePageChange} className='pagg' />
-      </Stack>
-    </Box>
+        <DataGrid
+          className='grid'
+          disableRowSelectionOnClick
+          rows={visibleRows}
+          columns={columns}
+          editMode="row"
+          rowModesModel={rowModesModel}
+          onRowModesModelChange={handleRowModesModelChange}
+          onRowEditStop={handleRowEditStop}
+          processRowUpdate={processRowUpdate}
+          pagination
+          pageSize={pageSize}
+          rowsPerPageOptions={[pageSize]}
+          rowCount={rows.length}
+          page={page}
+          onPageChange={handlePageChange}
+          sx={{ border: 'none' }}
+          slots={{
+            toolbar: EditToolbar,
+          }}
+          slotProps={{
+            toolbar: { handleOpenModal },
+          }}
+
+        />
+
+        <Stack spacing={2} direction="row" justifyContent="flex-end" mt={2}>
+          <Pagination count={totalPages} page={page} onChange={handlePageChange} className='pagg' />
+        </Stack>
+
+        <PromotionModal open={openModal} onClose={handleCloseModal}  />
+
+      </Box>
   );
 }

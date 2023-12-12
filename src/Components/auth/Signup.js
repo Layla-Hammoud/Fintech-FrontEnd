@@ -15,6 +15,7 @@ import "./auth.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import axiosInstance from "../../utils/axios";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -30,10 +31,10 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const { apiCall } = useApi();
   const [formData, setFormData] = useState({
-    name: "",
+    userName: "",
     email: "",
     password: "",
-    type: "",
+    role: "",
   });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,19 +43,34 @@ const Signup = () => {
       [name]: value,
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    if (!formData.email || !formData.password) {
-      toast.error("Please insert email or password");
+    try {
+      const response = await axiosInstance.post("/api/users/signup", formData);
+      toast.success(response.message);
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.errors) {
+        const { errors } = error.response.data;
+
+        if (errors.email) {
+          const emailError = errors.email;
+          toast.error(emailError);
+        }
+        if (errors.password) {
+          const passwordError = errors.password;
+          toast.error(passwordError);
+        }
+      } else {
+        toast.error(error.message);
+      }
       setLoading(false);
-      return;
     }
+
     setFormData({
-      name: "",
+      userName: "",
       email: "",
       password: "",
-      type: "",
+      role: "",
     });
   };
   return (
@@ -87,8 +103,8 @@ const Signup = () => {
                 <TextField
                   fullWidth
                   label="Name"
-                  name="name"
-                  value={formData.name}
+                  name="userName"
+                  value={formData.userName}
                   onChange={handleInputChange}
                   required
                   sx={{
@@ -133,10 +149,11 @@ const Signup = () => {
                   <Select
                     labelId="demo-multiple-name-label"
                     id="demo-multiple-name"
+                    name="role"
                     input={<OutlinedInput label="Name" />}
-                    value={formData.type}
+                    value={formData.role}
                     onChange={(e) =>
-                      setFormData({ ...formData, type: e.target.value })
+                      setFormData({ ...formData, role: e.target.value })
                     }
                     MenuProps={MenuProps}
                     required
