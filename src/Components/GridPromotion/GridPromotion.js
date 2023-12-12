@@ -45,18 +45,8 @@ import {
 
 
 function EditToolbar(props) {
-  const { setRows, setRowModesModel } = props;
+  const { handleOpenModal } = props;
   const [sorting, setSorting] = React.useState('');
-
-  const handleClick = () => {
-    // const id = randomId();
-    // setRows((oldRows) => [{ id,name: '', code: '', detail: '',startDate:new Date(),endDate:new Date(), amount: null, merchant:{userName:'King'}, isNew: true }, ...oldRows]);
-    // setRowModesModel((oldModel) => ({
-    //   ...oldModel,
-    //   [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-    // }));
-    // console.log(id)
-  };
 
   return (
     <GridToolbarContainer sx={{
@@ -69,7 +59,7 @@ function EditToolbar(props) {
       },
     }}
     >
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick} sx={{ height: '40px', color: 'black' }}>
+      <Button color="primary" startIcon={<AddIcon />} onClick={handleOpenModal} sx={{ height: '40px', color: 'black' }}>
         Add promotion
       </Button>
 
@@ -107,28 +97,41 @@ export default function GridPromotion() {
   const [rowModesModel, setRowModesModel] = useState({});
   const [page, setPage] = useState(1);
   const [openModal, setOpenModal] = React.useState(false);
-  const pageSize = 7; // Set the number of rows per page here
+  const [editedData, setEditedData] = useState({});
+  const pageSize = 7; // number of rows per page 
   const { apiCall } = useApi();
-  // Calculate the total number of pages based on the page size
+
+
+
+  // total number of pages based on the page size
   const totalPages = Math.ceil(rows.length / pageSize);
+
+  // the start and end indices for the current page
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+
+  const visibleRows = rows.slice(startIndex, endIndex);
+
+
+
 
   const handlePageChange = (event, value) => {
     setPage(value);
   };
 
 
-const handleOpenModal = () => {
+  const handleOpenModal = () => {
     setOpenModal(true);
-};
+  };
 
-const handleCloseModal = () => {
+  const handleCloseModal = () => {
     setOpenModal(false);
-};
+  };
   useEffect(() => {
     const fetchPromotions = async () => {
       try {
         const response = await apiCall({
-          url: "/api/promotions/read",
+          url: "/api/promotions/read/9",
           method: "get",
         });
         console.log(response);
@@ -145,31 +148,42 @@ const handleCloseModal = () => {
 
   }, []);
 
-  // Calculate the start and end indices for the current page
-  const startIndex = (page - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-
-  const visibleRows = rows.slice(startIndex, endIndex);
 
 
 
 
-  const handleRowEditStop = (params, event) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
+  const handleSaveClick = (id,params) => async() => {
+    try {
+      // setEditedData({
+      //   ...editedData,
+      //   [params.id]: params.data,
+      // });
+      const updatedData = UpdatedData(id);
+      console.log("Updated Data:", updatedData);
+  
+      await apiCall({
+        url: `/api/promotions/update`,
+        method: "put",
+        data: { id, ...updatedData },
+      });
+      
+      setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+    } catch (error) {
+      console.error("Error saving data:", error);
     }
   };
 
-  const handleEditClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-  };
-
-  const handleSaveClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-  };
-
-  const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
+  const handleDeleteClick = (id) => async() => {
+    try {
+      await apiCall({
+        url: `/api/promotions/delete`,
+        method: "delete",
+        data:{id}
+      });
+      setRows(rows.filter((row) => row.id !== id));
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
   };
 
   const handleCancelClick = (id) => () => {
@@ -194,34 +208,70 @@ const handleCloseModal = () => {
     setRowModesModel(newRowModesModel);
   };
 
+  //function to update row values
+  const UpdatedData = (id) => {
+    console.log('editedd',editedData)
+    const updatedRow = { ...rows.find((row) => row.id === id), ...editedData[id] };
+    console.log('updated',updatedRow)
+    return {
+      name: updatedRow.name,
+      code: updatedRow.code,
+      detail: updatedRow.detail,
+      amount: updatedRow.amount,
+      startDate: updatedRow.startDate,
+      endDate: updatedRow.endDate,
+    };
+  };
+
+
+
+  const handleRowEditStop = (params, event) => {
+    console.log(params);
+     setEditedData({
+        ...editedData,
+        [params.id]: params.data,
+      });
+    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+     
+    }
+  };
+
+  const handleEditClick = (id,params) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  };
+
   const columns = [
-    {
-      field: 'merchant',
-      headerName: 'Promotion Owner',
-      width: 250,
-      editable: true,
-      renderCell: (params) => (
-        <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
-          <Avatar style={{ width: 35, height: 35, marginRight: 10 }}>
-          {params.row.merchant.userName.charAt(0)}
-          
-          </Avatar>
-          {params.row.merchant.userName}
-        </div>
-      ),
-    },
-    { field: 'name', headerName: 'Name', width: 225, editable: true },
+    // {
+    //   field: 'merchant',
+    //   headerName: 'Promotion Owner',
+    //   width: 250,
+    //   editable: true,
+    //   renderCell: (params) => (
+    //     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    //       <Avatar style={{ width: 35, height: 35, marginRight: 10 }}>
+    //         {params.row.merchant.userName.charAt(0)}
+
+    //       </Avatar>
+    //       {params.row.merchant.userName}
+    //     </div>
+    //   ),
+    // },
+    { field: 'name', headerName: 'Promotion Name', width: 225, editable: true },
     { field: 'code', headerName: 'Code', width: 200, editable: true },
     { field: 'detail', headerName: 'Description', width: 400, align: 'left', headerAlign: 'left', editable: true, },
     { field: 'amount', headerName: 'Discount %', headerAlign: 'left', type: 'number', align: 'left', width: 150, editable: true, },
-    { field: 'startDate', headerAlign: 'left', type: 'Date', headerName: 'Start Date', width: 200, editable: true , renderCell: (params) => (
-      <div>
-        {new Date(params.row.startDate).toISOString().split('T')[0]}
-      </div>)},
-    { field: 'endDate', headerAlign: 'left', headerName: 'End Date', type: 'Date', width: 200, editable: true,renderCell: (params) => (
-      <div>
-        {new Date(params.row.endDate).toISOString().split('T')[0]}
-      </div>)},
+    {
+      field: 'startDate', headerAlign: 'left', type: 'Date', headerName: 'Start Date', width: 200, editable: true, renderCell: (params) => (
+        <div>
+          {new Date(params.row.startDate).toISOString().split('T')[0]}
+        </div>)
+    },
+    {
+      field: 'endDate', headerAlign: 'left', headerName: 'End Date', type: 'Date', width: 200, editable: true, renderCell: (params) => (
+        <div>
+          {new Date(params.row.endDate).toISOString().split('T')[0]}
+        </div>)
+    },
     {
       field: 'actions', headerAlign: 'left', align: 'left', type: 'actions', headerName: 'Actions', width: 100, cellClassName: 'actions',
       getActions: ({ id }) => {
@@ -273,16 +323,16 @@ const handleCloseModal = () => {
         sx={{
           display: 'block',
           height: 650,
-          width: '90% ',
+          width: '77% ',
           '& .actions': {
             color: 'text.secondary',
           },
           '& .textPrimary': {
             color: 'text.primary',
           },
-          marginLeft: '130px',
+          marginLeft: '150px',
           marginTop: '120px',
-          '@media(width<500px)': {
+          '@media(width<1000px)': {
             marginLeft: 'auto',
             marginRight: 'auto'
 
@@ -322,7 +372,7 @@ const handleCloseModal = () => {
             toolbar: EditToolbar,
           }}
           slotProps={{
-            toolbar: { setRows, setRowModesModel },
+            toolbar: { handleOpenModal },
           }}
 
         />
@@ -331,7 +381,7 @@ const handleCloseModal = () => {
           <Pagination count={totalPages} page={page} onChange={handlePageChange} className='pagg' />
         </Stack>
 
-        <PromotionMoal isEdit={true} open={openModal} close={handleCloseModal} />
+        <PromotionModal open={openModal} onClose={handleCloseModal}  />
 
       </Box>
   );

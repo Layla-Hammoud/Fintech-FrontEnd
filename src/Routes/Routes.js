@@ -33,8 +33,8 @@ const AppRoutes = () => {
           <Route path="SavingSection" element={<SavingPage />}></Route>
           <Route path="SavingSection" element={<SavingPage />}></Route>
           <Route path="merchants" element={<Merchants />}></Route>
-        </Route>
         {/* </Route> */}
+        </Route>
       </Routes>
   );
 };
